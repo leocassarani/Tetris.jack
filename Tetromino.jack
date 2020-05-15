@@ -1,11 +1,11 @@
-// vim: set filetype=javascript tabstop=4 shiftwidth=4 softtabstop=4:
-
 class Tetromino {
-    field int x, y;
+    field int x, y, size, rotation;
 
-    constructor Tetromino new(int startX, int startY) {
+    constructor Tetromino new(int startX, int startY, int unitSize) {
         let x = startX;
         let y = startY;
+        let size = unitSize;
+        let rotation = 0;
         return this;
     }
 
@@ -15,16 +15,82 @@ class Tetromino {
     }
 
     method int maxX() {
-        return x + 36;
+        if ((rotation = 0) | (rotation = 2)) {
+            return x + size + size + size;
+        } else {
+            return x + size + size;
+        }
     }
 
     method int maxY() {
-        return y + 24;
+        if ((rotation = 0) | (rotation = 2)) {
+            return y + size + size;
+        } else {
+            return y + size + size + size;
+        }
     }
 
     method void draw() {
-        do Screen.drawRectangle(x, y, x + 12, y + 12);      // ■
-        do Screen.drawRectangle(x, y + 12, maxX(), maxY()); // ■■■
+        if (rotation = 0) {
+            // ■
+            // ■■■
+            do Screen.drawRectangle(x, y, x + size, y + size);
+            do Screen.drawRectangle(x, y + size, maxX(), maxY());
+        } else {
+            if (rotation = 1) {
+                // ■■
+                // ■
+                // ■
+                do Screen.drawRectangle(x + size, y, maxX(), y + size);
+                do Screen.drawRectangle(x, y, x + size, maxY());
+            } else {
+                if (rotation = 2) {
+                    // ■■■
+                    //   ■
+                    do Screen.drawRectangle(x, y, maxX(), y + size);
+                    do Screen.drawRectangle(x + size + size, y + size, maxX(), maxY());
+                } else {
+                    if (rotation = 3) {
+                        //  ■
+                        //  ■
+                        // ■■
+                        do Screen.drawRectangle(x + size, y, maxX(), maxY());
+                        do Screen.drawRectangle(x, y + size + size, x + size, maxY());
+                    }
+                }
+            }
+        }
+        return;
+    }
+
+    method void decorate() {
+        if (rotation = 0) {
+            do Screen.drawRectangle(x + 4, y + 4, x + 8, y + 8);
+            do Screen.drawRectangle(x + 4, y + 16, x + 8, y + 20);
+            do Screen.drawRectangle(x + 16, y + 16, x + 20, y + 20);
+            do Screen.drawRectangle(x + 28, y + 16, x + 32, y + 20);
+        } else {
+            if (rotation = 1) {
+                do Screen.drawRectangle(x + 16, y + 4, x + 20, y + 8);
+                do Screen.drawRectangle(x + 4, y + 4, x + 8, y + 8);
+                do Screen.drawRectangle(x + 4, y + 16, x + 8, y + 20);
+                do Screen.drawRectangle(x + 4, y + 28, x + 8, y + 32);
+            } else {
+                if (rotation = 2) {
+                    do Screen.drawRectangle(x + 4, y + 4, x + 8, y + 8);
+                    do Screen.drawRectangle(x + 16, y + 4, x + 20, y + 8);
+                    do Screen.drawRectangle(x + 28, y + 4, x + 32, y + 8);
+                    do Screen.drawRectangle(x + 28, y + 16, x + 32, y + 20);
+                } else {
+                    if (rotation = 3) {
+                        do Screen.drawRectangle(x + 4, y + 28, x + 8, y + 32);
+                        do Screen.drawRectangle(x + 16, y + 4, x + 20, y + 8);
+                        do Screen.drawRectangle(x + 16, y + 16, x + 20, y + 20);
+                        do Screen.drawRectangle(x + 16, y + 28, x + 20, y + 32);
+                    }
+                }
+            }
+        }
         return;
     }
 
@@ -32,9 +98,9 @@ class Tetromino {
         var int max;
         let max = maxY();
 
-        if ((max + 12) < 255) {
+        if ((max + size) < 255) {
             do hide();
-            let y = y + 12;
+            let y = y + size;
             do show();
         }
 
@@ -42,9 +108,9 @@ class Tetromino {
     }
 
     method void moveLeft() {
-        if ((x - 12) > 195) {
+        if ((x - size) > 195) {
             do hide();
-            let x = x - 12;
+            let x = x - size;
             do show();
         }
 
@@ -52,13 +118,51 @@ class Tetromino {
     }
 
     method void moveRight() {
-        var int max;
-        let max = maxX();
-
-        if ((max + 12) < 317) {
+        if ((maxX() + size) < 317) {
             do hide();
-            let x = x + 12;
+            let x = x + size;
             do show();
+        }
+
+        return;
+    }
+
+    // Clockwise rotation
+    method void rotate() {
+        if (rotation = 0) {
+            if ((y - size) > 1) {
+                do hide();
+                let x = x + size;
+                let y = y - size;
+                let rotation = 1;
+                do show();
+            }
+        } else {
+            if (rotation = 1) {
+                if ((x - size) > 195) {
+                    do hide();
+                    let x = x - size;
+                    let y = y + size;
+                    let rotation = 2;
+                    do show();
+                }
+            } else {
+                if (rotation = 2) {
+                    do hide();
+                    let y = y - size;
+                    let rotation = 3;
+                    do show();
+                } else {
+                    if (rotation = 3) {
+                        if ((maxX() + size) < 317) {
+                            do hide();
+                            let y = y + size;
+                            let rotation = 0;
+                            do show();
+                        }
+                    }
+                }
+            }
         }
 
         return;
@@ -73,6 +177,8 @@ class Tetromino {
     method void show() {
         do Screen.setColor(true);
         do draw();
+        do Screen.setColor(false);
+        do decorate();
         return;
     }
 }

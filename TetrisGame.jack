@@ -16,8 +16,8 @@ class TetrisGame {
         do Screen.drawLine(317, 1, 317, 254);
         do Screen.drawLine(195, 254, 317, 254);
 
-        let tetromino = Tetromino.new(232, 2);
-        do tetromino.draw();
+        let tetromino = Tetromino.new(232, 2, 12);
+        do tetromino.show();
 
         return this;
     }
@@ -35,29 +35,37 @@ class TetrisGame {
         while (true) {
             while (key = 0) {
                 let key = Keyboard.keyPressed();
-                do Sys.wait(50);
+                do Sys.wait(100);
 
                 let waited = waited + 1;
                 if (waited = 10) {
-                    do tetromino.step();
+                    //do tetromino.step();
                     let waited = 0;
                 }
             }
 
             while (~(key = 0)) {
-                if (key = 130) {
+                if (key = 130) { // left
                     do tetromino.moveLeft();
                 } else {
-                    if (key = 132) {
+                    if (key = 132) { // right
                         do tetromino.moveRight();
+                    } else {
+                        if (key = 131) { // up
+                            do tetromino.rotate();
+                        } else {
+                            if (key = 133) { // down
+                                do tetromino.step();
+                            }
+                        }
                     }
                 }
 
-                do Sys.wait(50);
+                do Sys.wait(100);
 
                 let waited = waited + 1;
                 if (waited = 10) {
-                    do tetromino.step();
+                    //do tetromino.step();
                     let waited = 0;
                 }
 
