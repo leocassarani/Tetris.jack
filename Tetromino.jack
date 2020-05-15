@@ -15,6 +15,13 @@ class Tetromino {
         return;
     }
 
+    method void reset(int colArg, int rowArg) {
+        let col = colArg;
+        let row = rowArg;
+        let rotation = 0;
+        return;
+    }
+
     method void show() {
         if (rotation = 0) {
             // ■

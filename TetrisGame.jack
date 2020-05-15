@@ -60,6 +60,11 @@ class TetrisGame {
                         } else {
                             if (key = 133) { // down
                                 do tetromino.step();
+                            } else {
+                                if (key = 128) { // enter
+                                    do tetromino.reset(3, 20);
+                                    do tetromino.show();
+                                }
                             }
                         }
                     }
