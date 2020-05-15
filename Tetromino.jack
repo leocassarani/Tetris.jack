@@ -1,10 +1,11 @@
 class Tetromino {
-    field int x, y, size, rotation;
+    field int col, row, rotation;
+    field Board board;
 
-    constructor Tetromino new(int startX, int startY, int unitSize) {
-        let x = startX;
-        let y = startY;
-        let size = unitSize;
+    constructor Tetromino new(int colArg, int rowArg, Board boardArg) {
+        let col = colArg;
+        let row = rowArg;
+        let board = boardArg;
         let rotation = 0;
         return this;
     }
@@ -14,153 +15,186 @@ class Tetromino {
         return;
     }
 
-    method int maxX() {
-        if ((rotation = 0) | (rotation = 2)) {
-            return x + size + size + size;
-        } else {
-            return x + size + size;
-        }
-    }
-
-    method int maxY() {
-        if ((rotation = 0) | (rotation = 2)) {
-            return y + size + size;
-        } else {
-            return y + size + size + size;
-        }
-    }
-
-    method void draw() {
+    method void show() {
         if (rotation = 0) {
             // ■
             // ■■■
-            do Screen.drawRectangle(x, y, x + size, y + size);
-            do Screen.drawRectangle(x, y + size, maxX(), maxY());
+            do board.fill(col, row);
+            do board.fill(col, row - 1);
+            do board.fill(col + 1, row - 1);
+            do board.fill(col + 2, row - 1);
         } else {
             if (rotation = 1) {
                 // ■■
                 // ■
                 // ■
-                do Screen.drawRectangle(x + size, y, maxX(), y + size);
-                do Screen.drawRectangle(x, y, x + size, maxY());
+                do board.fill(col, row);
+                do board.fill(col + 1, row);
+                do board.fill(col, row - 1);
+                do board.fill(col, row - 2);
             } else {
                 if (rotation = 2) {
                     // ■■■
                     //   ■
-                    do Screen.drawRectangle(x, y, maxX(), y + size);
-                    do Screen.drawRectangle(x + size + size, y + size, maxX(), maxY());
+                    do board.fill(col, row);
+                    do board.fill(col + 1, row);
+                    do board.fill(col + 2, row);
+                    do board.fill(col + 2, row - 1);
                 } else {
-                    if (rotation = 3) {
-                        //  ■
-                        //  ■
-                        // ■■
-                        do Screen.drawRectangle(x + size, y, maxX(), maxY());
-                        do Screen.drawRectangle(x, y + size + size, x + size, maxY());
-                    }
+                    //  ■
+                    //  ■
+                    // ■■
+                    do board.fill(col + 1, row);
+                    do board.fill(col + 1, row - 1);
+                    do board.fill(col + 1, row - 2);
+                    do board.fill(col, row - 2);
                 }
             }
         }
-        return;
-    }
 
-    method void decorate() {
-        if (rotation = 0) {
-            do Screen.drawRectangle(x + 4, y + 4, x + 8, y + 8);
-            do Screen.drawRectangle(x + 4, y + 16, x + 8, y + 20);
-            do Screen.drawRectangle(x + 16, y + 16, x + 20, y + 20);
-            do Screen.drawRectangle(x + 28, y + 16, x + 32, y + 20);
-        } else {
-            if (rotation = 1) {
-                do Screen.drawRectangle(x + 16, y + 4, x + 20, y + 8);
-                do Screen.drawRectangle(x + 4, y + 4, x + 8, y + 8);
-                do Screen.drawRectangle(x + 4, y + 16, x + 8, y + 20);
-                do Screen.drawRectangle(x + 4, y + 28, x + 8, y + 32);
-            } else {
-                if (rotation = 2) {
-                    do Screen.drawRectangle(x + 4, y + 4, x + 8, y + 8);
-                    do Screen.drawRectangle(x + 16, y + 4, x + 20, y + 8);
-                    do Screen.drawRectangle(x + 28, y + 4, x + 32, y + 8);
-                    do Screen.drawRectangle(x + 28, y + 16, x + 32, y + 20);
-                } else {
-                    if (rotation = 3) {
-                        do Screen.drawRectangle(x + 4, y + 28, x + 8, y + 32);
-                        do Screen.drawRectangle(x + 16, y + 4, x + 20, y + 8);
-                        do Screen.drawRectangle(x + 16, y + 16, x + 20, y + 20);
-                        do Screen.drawRectangle(x + 16, y + 28, x + 20, y + 32);
-                    }
-                }
-            }
-        }
         return;
     }
 
     method void step() {
-        var int max;
-        let max = maxY();
-
-        if ((max + size) < 255) {
-            do hide();
-            let y = y + size;
-            do show();
+        if ((row - 1) < height()) {
+            return;
         }
+
+        if (rotation = 0) {
+            do board.empty(col, row);
+            do board.empty(col + 1, row - 1);
+            do board.empty(col + 2, row - 1);
+        } else {
+            if (rotation = 1) {
+                do board.empty(col, row);
+                do board.empty(col + 1, row);
+            } else {
+                if (rotation = 2) {
+                    do board.empty(col, row);
+                    do board.empty(col + 1, row);
+                    do board.empty(col + 2, row);
+                } else {
+                    do board.empty(col + 1, row);
+                    do board.empty(col, row - 2);
+                }
+            }
+        }
+
+        let row = row - 1;
+        do show();
 
         return;
     }
 
     method void moveLeft() {
-        if ((x - size) > 195) {
-            do hide();
-            let x = x - size;
-            do show();
+        if (col = 0) {
+            return;
         }
+
+        if (rotation = 0) {
+            do board.empty(col, row);
+            do board.empty(col + 2, row - 1);
+        } else {
+            if (rotation = 1) {
+                do board.empty(col + 1, row);
+                do board.empty(col, row - 1);
+                do board.empty(col, row - 2);
+            } else {
+                if (rotation = 2) {
+                    do board.empty(col + 2, row);
+                    do board.empty(col + 2, row - 1);
+                } else {
+                    do board.empty(col + 1, row);
+                    do board.empty(col + 1, row - 1);
+                    do board.empty(col + 1, row - 2);
+                }
+            }
+        }
+
+        let col = col - 1;
+        do show();
 
         return;
     }
 
     method void moveRight() {
-        if ((maxX() + size) < 317) {
-            do hide();
-            let x = x + size;
-            do show();
+        if ((col + width()) > 9) {
+            return;
         }
+
+        if (rotation = 0) {
+            do board.empty(col, row);
+            do board.empty(col, row - 1);
+        } else {
+            if (rotation = 1) {
+                do board.empty(col, row);
+                do board.empty(col, row - 1);
+                do board.empty(col, row - 2);
+            } else {
+                if (rotation = 2) {
+                    do board.empty(col, row);
+                    do board.empty(col + 2, row - 1);
+                } else {
+                    do board.empty(col + 1, row);
+                    do board.empty(col + 1, row - 1);
+                    do board.empty(col, row - 2);
+                }
+            }
+        }
+
+        let col = col + 1;
+        do show();
 
         return;
     }
 
-    // Clockwise rotation
     method void rotate() {
         if (rotation = 0) {
-            if ((y - size) > 1) {
-                do hide();
-                let x = x + size;
-                let y = y - size;
-                let rotation = 1;
-                do show();
+            if ((row - 1) < height()) {
+                return;
             }
+
+            do board.empty(col, row);
+            do board.empty(col, row - 1);
+            do board.empty(col + 2, row - 1);
+
+            let col = col + 1;
+            let rotation = 1;
+            do show();
         } else {
             if (rotation = 1) {
-                if ((x - size) > 195) {
-                    do hide();
-                    let x = x - size;
-                    let y = y + size;
-                    let rotation = 2;
-                    do show();
+                if (col = 0) {
+                    return;
                 }
+
+                do board.empty(col, row);
+                do board.empty(col + 1, row);
+                do board.empty(col, row - 2);
+
+                let col = col - 1;
+                let row = row - 1;
+                let rotation = 2;
+                do show();
             } else {
                 if (rotation = 2) {
-                    do hide();
-                    let y = y - size;
+                    do board.empty(col, row);
+                    do board.empty(col + 2, row);
+                    do board.empty(col + 2, row - 1);
+
+                    let row = row + 1;
                     let rotation = 3;
                     do show();
                 } else {
-                    if (rotation = 3) {
-                        if ((maxX() + size) < 317) {
-                            do hide();
-                            let y = y + size;
-                            let rotation = 0;
-                            do show();
-                        }
+                    if ((col + width()) > 9) {
+                        return;
                     }
+
+                    do board.empty(col + 1, row);
+                    do board.empty(col + 1, row - 2);
+                    do board.empty(col, row - 2);
+
+                    let rotation = 0;
+                    do show();
                 }
             }
         }
@@ -168,17 +202,19 @@ class Tetromino {
         return;
     }
 
-    method void hide() {
-        do Screen.setColor(false);
-        do draw();
-        return;
+    method int width() {
+        if ((rotation = 0) | (rotation = 2)) {
+            return 3;
+        } else {
+            return 2;
+        }
     }
 
-    method void show() {
-        do Screen.setColor(true);
-        do draw();
-        do Screen.setColor(false);
-        do decorate();
-        return;
+    method int height() {
+        if ((rotation = 0) | (rotation = 2)) {
+            return 2;
+        } else {
+            return 3;
+        }
     }
 }

@@ -1,0 +1,83 @@
+class Board {
+    field int minX, minY, rows, tile;
+    field Array tiles;
+
+    constructor Board new(int x, int y, int rowsArg, int tileArg) {
+        var int i, j;
+        var Array row;
+
+        let minX = x;
+        let minY = y;
+        let rows = rowsArg;
+        let tile = tileArg;
+
+        let tiles = Array.new(rows);
+
+        let i = 0;
+        let j = 0;
+
+        while (i < rows) {
+            let row = Array.new(10);
+
+            while (j < 10) {
+                let row[j] = false;
+                let j = j + 1;
+            }
+
+            let tiles[i] = row;
+            let i = i + 1;
+        }
+
+        return this;
+    }
+
+    method void dispose() {
+        var int i;
+        var Array row;
+
+        let i = 0;
+        while (i < rows) {
+            let row = tiles[i];
+            do row.dispose();
+        }
+        do tiles.dispose();
+
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    method void fill(int col, int row) {
+        var int x, y;
+        var Array tileRow;
+
+        let x = minX + (tile * col);
+        let y = minY + (tile * (rows - row));
+
+        do Screen.setColor(true);
+        do Screen.drawRectangle(x, y, x + tile, y + tile);
+
+        do Screen.setColor(false);
+        do Screen.drawRectangle(x + 4, y + 4, (x + tile) - 4, (y + tile) - 4);
+
+        let tileRow = tiles[row];
+        let tileRow[col] = true;
+
+        return;
+    }
+
+    method void empty(int col, int row) {
+        var int x, y;
+        var Array tileRow;
+
+        let x = minX + (tile * col);
+        let y = minY + (tile * (rows - row));
+
+        do Screen.setColor(false);
+        do Screen.drawRectangle(x, y, x + tile, y + tile);
+
+        let tileRow = tiles[row];
+        let tileRow[col] = false;
+
+        return;
+    }
+}
