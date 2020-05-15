@@ -1,0 +1,78 @@
+// vim: set filetype=javascript tabstop=4 shiftwidth=4 softtabstop=4:
+
+class Tetromino {
+    field int x, y;
+
+    constructor Tetromino new(int startX, int startY) {
+        let x = startX;
+        let y = startY;
+        return this;
+    }
+
+    method void dispose() {
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    method int maxX() {
+        return x + 36;
+    }
+
+    method int maxY() {
+        return y + 24;
+    }
+
+    method void draw() {
+        do Screen.drawRectangle(x, y, x + 12, y + 12);      // ■
+        do Screen.drawRectangle(x, y + 12, maxX(), maxY()); // ■■■
+        return;
+    }
+
+    method void step() {
+        var int max;
+        let max = maxY();
+
+        if ((max + 12) < 255) {
+            do hide();
+            let y = y + 12;
+            do show();
+        }
+
+        return;
+    }
+
+    method void moveLeft() {
+        if ((x - 12) > 195) {
+            do hide();
+            let x = x - 12;
+            do show();
+        }
+
+        return;
+    }
+
+    method void moveRight() {
+        var int max;
+        let max = maxX();
+
+        if ((max + 12) < 317) {
+            do hide();
+            let x = x + 12;
+            do show();
+        }
+
+        return;
+    }
+
+    method void hide() {
+        do Screen.setColor(false);
+        do draw();
+        return;
+    }
+
+    method void show() {
+        do Screen.setColor(true);
+        do draw();
+        return;
+    }
+}

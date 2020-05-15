@@ -1,0 +1,11 @@
+// vim: set filetype=javascript tabstop=4 shiftwidth=4 softtabstop=4:
+
+class Main {
+    function void main() {
+        var TetrisGame game;
+        let game = TetrisGame.new();
+        do game.run();
+        do game.dispose();
+        return;
+    }
+}
