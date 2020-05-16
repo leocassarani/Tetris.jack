@@ -46,6 +46,12 @@ class Board {
         return;
     }
 
+    method boolean isFull(int col, int row) {
+        var Array tileRow;
+        let tileRow = tiles[row];
+        return tileRow[col];
+    }
+
     method void fill(int col, int row) {
         var int x, y;
         var Array tileRow;
@@ -65,7 +71,7 @@ class Board {
         return;
     }
 
-    method void empty(int col, int row) {
+    method void unfill(int col, int row) {
         var int x, y;
         var Array tileRow;
 
