@@ -57,7 +57,7 @@ class Board {
         var Array tileRow;
 
         let x = minX + (tile * col);
-        let y = minY + (tile * (rows - row));
+        let y = minY + (tile * (rows - (row + 1)));
 
         do Screen.setColor(true);
         do Screen.drawRectangle(x, y, x + tile, y + tile);
@@ -76,7 +76,7 @@ class Board {
         var Array tileRow;
 
         let x = minX + (tile * col);
-        let y = minY + (tile * (rows - row));
+        let y = minY + (tile * (rows - (row + 1)));
 
         do Screen.setColor(false);
         do Screen.drawRectangle(x, y, x + tile, y + tile);

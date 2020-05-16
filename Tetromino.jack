@@ -15,6 +15,33 @@ class Tetromino {
         return;
     }
 
+    method int getCol() {
+        return col;
+    }
+
+    method void setCol(int colArg) {
+        let col = colArg;
+        return;
+    }
+
+    method int getRow() {
+        return row;
+    }
+
+    method void setRow(int rowArg) {
+        let row = rowArg;
+        return;
+    }
+
+    method int getRotation() {
+        return rotation;
+    }
+
+    method void setRotation(int rotationArg) {
+        let rotation = rotationArg;
+        return;
+    }
+
     method void reset(int colArg, int rowArg) {
         let col = colArg;
         let row = rowArg;
@@ -23,326 +50,27 @@ class Tetromino {
     }
 
     method void show() {
-        if (rotation = 0) {
-            // ■
-            // ■■■
-            do board.fill(col, row);
-            do board.fill(col, row - 1);
-            do board.fill(col + 1, row - 1);
-            do board.fill(col + 2, row - 1);
-        } else {
-            if (rotation = 1) {
-                // ■■
-                // ■
-                // ■
-                do board.fill(col, row);
-                do board.fill(col + 1, row);
-                do board.fill(col, row - 1);
-                do board.fill(col, row - 2);
-            } else {
-                if (rotation = 2) {
-                    // ■■■
-                    //   ■
-                    do board.fill(col, row);
-                    do board.fill(col + 1, row);
-                    do board.fill(col + 2, row);
-                    do board.fill(col + 2, row - 1);
-                } else {
-                    //  ■
-                    //  ■
-                    // ■■
-                    do board.fill(col + 1, row);
-                    do board.fill(col + 1, row - 1);
-                    do board.fill(col + 1, row - 2);
-                    do board.fill(col, row - 2);
-                }
-            }
-        }
-
+        do J.show(this, board);
         return;
     }
 
     method void step() {
-        if ((row - 1) < height()) {
-            return;
-        }
-
-        if (rotation = 0) {
-            if (
-                board.isFull(col, row - 2)     |
-                board.isFull(col + 1, row - 2) |
-                board.isFull(col + 2, row - 2)
-            ) {
-                return;
-            }
-
-            do board.unfill(col, row);
-            do board.unfill(col + 1, row - 1);
-            do board.unfill(col + 2, row - 1);
-        } else {
-            if (rotation = 1) {
-                if (
-                    board.isFull(col + 1, row - 1) |
-                    board.isFull(col, row - 3)
-                ) {
-                    return;
-                }
-
-                do board.unfill(col, row);
-                do board.unfill(col + 1, row);
-            } else {
-                if (rotation = 2) {
-                    if (
-                        board.isFull(col, row - 1) |
-                        board.isFull(col + 2, row - 2)
-                    ) {
-                        return;
-                    }
-
-                    do board.unfill(col, row);
-                    do board.unfill(col + 1, row);
-                    do board.unfill(col + 2, row);
-                } else {
-                    if (
-                        board.isFull(col, row - 3) |
-                        board.isFull(col + 1, row - 3)
-                    ) {
-                        return;
-                    }
-
-                    do board.unfill(col + 1, row);
-                    do board.unfill(col, row - 2);
-                }
-            }
-        }
-
-        let row = row - 1;
-        do show();
-
+        do J.step(this, board);
         return;
     }
 
     method void moveLeft() {
-        if (col = 0) {
-            return;
-        }
-
-        if (rotation = 0) {
-            if (
-                board.isFull(col - 1, row) |
-                board.isFull(col - 1, row - 1)
-            ) {
-                return;
-            }
-
-            do board.unfill(col, row);
-            do board.unfill(col + 2, row - 1);
-        } else {
-            if (rotation = 1) {
-                if (
-                    board.isFull(col - 1, row)     |
-                    board.isFull(col - 1, row - 1) |
-                    board.isFull(col - 1, row - 2)
-                ) {
-                    return;
-                }
-
-                do board.unfill(col + 1, row);
-                do board.unfill(col, row - 1);
-                do board.unfill(col, row - 2);
-            } else {
-                if (rotation = 2) {
-                    if (
-                        board.isFull(col - 1, row) |
-                        board.isFull(col + 1, row - 1)
-                    ) {
-                        return;
-                    }
-
-                    do board.unfill(col + 2, row);
-                    do board.unfill(col + 2, row - 1);
-                } else {
-                    if (
-                        board.isFull(col, row)     |
-                        board.isFull(col, row - 1) |
-                        board.isFull(col - 1, row - 2)
-                    ) {
-                        return;
-                    }
-
-                    do board.unfill(col + 1, row);
-                    do board.unfill(col + 1, row - 1);
-                    do board.unfill(col + 1, row - 2);
-                }
-            }
-        }
-
-        let col = col - 1;
-        do show();
-
+        do J.moveLeft(this, board);
         return;
     }
 
     method void moveRight() {
-        if ((col + width()) > 9) {
-            return;
-        }
-
-        if (rotation = 0) {
-            if (
-                board.isFull(col + 1, row) |
-                board.isFull(col + 3, row - 1)
-            ) {
-                return;
-            }
-
-            do board.unfill(col, row);
-            do board.unfill(col, row - 1);
-        } else {
-            if (rotation = 1) {
-                if (
-                    board.isFull(col + 2, row)     |
-                    board.isFull(col + 1, row - 1) |
-                    board.isFull(col + 1, row - 2)
-                ) {
-                    return;
-                }
-
-                do board.unfill(col, row);
-                do board.unfill(col, row - 1);
-                do board.unfill(col, row - 2);
-            } else {
-                if (rotation = 2) {
-                    if (
-                        board.isFull(col + 3, row) |
-                        board.isFull(col + 3, row - 1)
-                    ) {
-                        return;
-                    }
-
-                    do board.unfill(col, row);
-                    do board.unfill(col + 2, row - 1);
-                } else {
-                    if (
-                        board.isFull(col + 2, row)     |
-                        board.isFull(col + 2, row - 1) |
-                        board.isFull(col + 2, row - 2)
-                    ) {
-                        return;
-                    }
-
-                    do board.unfill(col + 1, row);
-                    do board.unfill(col + 1, row - 1);
-                    do board.unfill(col, row - 2);
-                }
-            }
-        }
-
-        let col = col + 1;
-        do show();
-
+        do J.moveRight(this, board);
         return;
     }
 
     method void rotate() {
-        if (rotation = 0) {
-            if ((row - 1) < height()) {
-                return;
-            }
-
-            if (
-                board.isFull(col + 1, row) |
-                board.isFull(col + 2, row) |
-                board.isFull(col + 1, row - 2)
-            ) {
-                return;
-            }
-
-            do board.unfill(col, row);
-            do board.unfill(col, row - 1);
-            do board.unfill(col + 2, row - 1);
-
-            let col = col + 1;
-            let rotation = 1;
-            do show();
-        } else {
-            if (rotation = 1) {
-                if (col = 0) {
-                    return;
-                }
-
-                if (
-                    board.isFull(col - 1, row - 1) |
-                    board.isFull(col + 1, row - 1) |
-                    board.isFull(col + 1, row - 2)
-                ) {
-                    return;
-                }
-
-                do board.unfill(col, row);
-                do board.unfill(col + 1, row);
-                do board.unfill(col, row - 2);
-
-                let col = col - 1;
-                let row = row - 1;
-                let rotation = 2;
-                do show();
-            } else {
-                if (rotation = 2) {
-                    if (
-                        board.isFull(col + 1, row + 1) |
-                        board.isFull(col + 1, row - 1) |
-                        board.isFull(col, row - 1)
-                    ) {
-                        return;
-                    }
-
-                    do board.unfill(col, row);
-                    do board.unfill(col + 2, row);
-                    do board.unfill(col + 2, row - 1);
-
-                    let row = row + 1;
-                    let rotation = 3;
-                    do show();
-                } else {
-                    if ((col + width()) > 9) {
-                        return;
-                    }
-
-                    if (
-                        board.isFull(col, row)     |
-                        board.isFull(col, row - 1) |
-                        board.isFull(col + 2, row - 1)
-                    ) {
-                        return;
-                    }
-
-                    do board.unfill(col + 1, row);
-                    do board.unfill(col + 1, row - 2);
-                    do board.unfill(col, row - 2);
-
-                    let rotation = 0;
-                    do show();
-                }
-            }
-        }
-
+        do J.rotate(this, board);
         return;
-    }
-
-    method int width() {
-        if ((rotation = 0) | (rotation = 2)) {
-            return 3;
-        } else {
-            return 2;
-        }
-    }
-
-    method int height() {
-        if ((rotation = 0) | (rotation = 2)) {
-            return 2;
-        } else {
-            return 3;
-        }
     }
 }
