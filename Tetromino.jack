@@ -66,12 +66,12 @@ class Tetromino {
 
     method void step() {
         if (type = 0) {
-            do J.step(this, board);
+            do J.move(this, board, 0);
         } else {
             if (type = 1) {
-                do I.step(this, board);
+                do I.move(this, board, 0);
             } else {
-                do O.step(this, board);
+                do O.move(this, board, 0);
             }
         }
         return;
@@ -79,12 +79,12 @@ class Tetromino {
 
     method void moveLeft() {
         if (type = 0) {
-            do J.moveLeft(this, board);
+            do J.move(this, board, 1);
         } else {
             if (type = 1) {
-                do I.moveLeft(this, board);
+                do I.move(this, board, 1);
             } else {
-                do O.moveLeft(this, board);
+                do O.move(this, board, 1);
             }
         }
         return;
@@ -92,12 +92,12 @@ class Tetromino {
 
     method void moveRight() {
         if (type = 0) {
-            do J.moveRight(this, board);
+            do J.move(this, board, 2);
         } else {
             if (type = 1) {
-                do I.moveRight(this, board);
+                do I.move(this, board, 2);
             } else {
-                do O.moveRight(this, board);
+                do O.move(this, board, 2);
             }
         }
         return;

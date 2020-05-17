@@ -47,164 +47,150 @@ class J {
         return;
     }
 
-    function void step(Tetromino tetromino, Board board) {
+    // direction: 0 = down, 1 = left, 2 = right
+    function void move(Tetromino tetromino, Board board, int direction) {
         var int col, row, rotation;
 
         let col = tetromino.getCol();
         let row = tetromino.getRow();
         let rotation = tetromino.getRotation();
 
-        if (row < J.height(rotation)) {
-            return;
-        }
-
-        if (rotation = 0) {
-            if (
-                board.isFull(col, row - 2)     |
-                board.isFull(col + 1, row - 2) |
-                board.isFull(col + 2, row - 2)
-            ) {
+        if (direction = 0) {
+            // DOWN
+            if (row < J.height(rotation)) {
                 return;
             }
-        } else {
-            if (rotation = 1) {
+
+            if (rotation = 0) {
                 if (
-                    board.isFull(col + 1, row - 1) |
-                    board.isFull(col, row - 3)
+                    board.isFull(col, row - 2)     |
+                    board.isFull(col + 1, row - 2) |
+                    board.isFull(col + 2, row - 2)
                 ) {
                     return;
                 }
             } else {
-                if (rotation = 2) {
+                if (rotation = 1) {
                     if (
-                        board.isFull(col, row - 1) |
-                        board.isFull(col + 2, row - 2)
+                        board.isFull(col + 1, row - 1) |
+                        board.isFull(col, row - 3)
                     ) {
                         return;
                     }
                 } else {
-                    if (
-                        board.isFull(col, row - 3) |
-                        board.isFull(col + 1, row - 3)
-                    ) {
-                        return;
+                    if (rotation = 2) {
+                        if (
+                            board.isFull(col, row - 1) |
+                            board.isFull(col + 2, row - 2)
+                        ) {
+                            return;
+                        }
+                    } else {
+                        if (
+                            board.isFull(col, row - 3) |
+                            board.isFull(col + 1, row - 3)
+                        ) {
+                            return;
+                        }
                     }
                 }
             }
-        }
 
-        do J.show(tetromino, board, false);
-        do tetromino.setRow(row - 1);
-        do J.show(tetromino, board, true);
-
-        return;
-    }
-
-    function void moveLeft(Tetromino tetromino, Board board) {
-        var int col, row, rotation;
-
-        let col = tetromino.getCol();
-        let row = tetromino.getRow();
-        let rotation = tetromino.getRotation();
-
-        if (col = 0) {
-            return;
-        }
-
-        if (rotation = 0) {
-            if (
-                board.isFull(col - 1, row) |
-                board.isFull(col - 1, row - 1)
-            ) {
-                return;
-            }
+            do J.show(tetromino, board, false);
+            do tetromino.setRow(row - 1);
         } else {
-            if (rotation = 1) {
-                if (
-                    board.isFull(col - 1, row)     |
-                    board.isFull(col - 1, row - 1) |
-                    board.isFull(col - 1, row - 2)
-                ) {
+            if (direction = 1) {
+                // LEFT
+                if (col = 0) {
                     return;
                 }
-            } else {
-                if (rotation = 2) {
+
+                if (rotation = 0) {
                     if (
                         board.isFull(col - 1, row) |
-                        board.isFull(col + 1, row - 1)
+                        board.isFull(col - 1, row - 1)
                     ) {
                         return;
                     }
                 } else {
-                    if (
-                        board.isFull(col, row)     |
-                        board.isFull(col, row - 1) |
-                        board.isFull(col - 1, row - 2)
-                    ) {
-                        return;
+                    if (rotation = 1) {
+                        if (
+                            board.isFull(col - 1, row)     |
+                            board.isFull(col - 1, row - 1) |
+                            board.isFull(col - 1, row - 2)
+                        ) {
+                            return;
+                        }
+                    } else {
+                        if (rotation = 2) {
+                            if (
+                                board.isFull(col - 1, row) |
+                                board.isFull(col + 1, row - 1)
+                            ) {
+                                return;
+                            }
+                        } else {
+                            if (
+                                board.isFull(col, row)     |
+                                board.isFull(col, row - 1) |
+                                board.isFull(col - 1, row - 2)
+                            ) {
+                                return;
+                            }
+                        }
                     }
                 }
-            }
-        }
 
-        do J.show(tetromino, board, false);
-        do tetromino.setCol(col - 1);
-        do J.show(tetromino, board, true);
-
-        return;
-    }
-
-    function void moveRight(Tetromino tetromino, Board board) {
-        var int col, row, rotation;
-
-        let col = tetromino.getCol();
-        let row = tetromino.getRow();
-        let rotation = tetromino.getRotation();
-
-        if ((col + J.width(rotation)) > 9) {
-            return;
-        }
-
-        if (rotation = 0) {
-            if (
-                board.isFull(col + 1, row) |
-                board.isFull(col + 3, row - 1)
-            ) {
-                return;
-            }
-        } else {
-            if (rotation = 1) {
-                if (
-                    board.isFull(col + 2, row)     |
-                    board.isFull(col + 1, row - 1) |
-                    board.isFull(col + 1, row - 2)
-                ) {
+                do J.show(tetromino, board, false);
+                do tetromino.setCol(col - 1);
+            } else {
+                // RIGHT
+                if ((col + J.width(rotation)) > 9) {
                     return;
                 }
-            } else {
-                if (rotation = 2) {
+
+                if (rotation = 0) {
                     if (
-                        board.isFull(col + 3, row) |
+                        board.isFull(col + 1, row) |
                         board.isFull(col + 3, row - 1)
                     ) {
                         return;
                     }
                 } else {
-                    if (
-                        board.isFull(col + 2, row)     |
-                        board.isFull(col + 2, row - 1) |
-                        board.isFull(col + 2, row - 2)
-                    ) {
-                        return;
+                    if (rotation = 1) {
+                        if (
+                            board.isFull(col + 2, row)     |
+                            board.isFull(col + 1, row - 1) |
+                            board.isFull(col + 1, row - 2)
+                        ) {
+                            return;
+                        }
+                    } else {
+                        if (rotation = 2) {
+                            if (
+                                board.isFull(col + 3, row) |
+                                board.isFull(col + 3, row - 1)
+                            ) {
+                                return;
+                            }
+                        } else {
+                            if (
+                                board.isFull(col + 2, row)     |
+                                board.isFull(col + 2, row - 1) |
+                                board.isFull(col + 2, row - 2)
+                            ) {
+                                return;
+                            }
+                        }
                     }
                 }
+
+                do J.show(tetromino, board, false);
+                do tetromino.setCol(col + 1);
             }
         }
 
-        do J.show(tetromino, board, false);
-        do tetromino.setCol(col + 1);
         do J.show(tetromino, board, true);
-
         return;
     }
 

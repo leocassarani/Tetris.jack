@@ -17,27 +17,54 @@ class O {
         return;
     }
 
-    function void step(Tetromino tetromino, Board board) {
-        do O.show(tetromino, board, false);
-        do tetromino.setRow(tetromino.getRow() - 1);
+    // direction: 0 = down, 1 = left, 2 = right
+    function void move(Tetromino tetromino, Board board, int direction) {
+        var int col, row;
+
+        let col = tetromino.getCol();
+        let row = tetromino.getRow();
+
+        if (direction = 0) {
+            // DOWN
+            if (
+                (row < 2)                  |
+                board.isFull(col, row - 2) |
+                board.isFull(col + 1, row - 2)
+            ) {
+                return;
+            }
+
+            do O.show(tetromino, board, false);
+            do tetromino.setRow(row - 1);
+        } else {
+            if (direction = 1) {
+                // LEFT
+                if (
+                    (col = 0)                  |
+                    board.isFull(col - 1, row) |
+                    board.isFull(col - 1, row - 1)
+                ) {
+                    return;
+                }
+
+                do O.show(tetromino, board, false);
+                do tetromino.setCol(col - 1);
+            } else {
+                // RIGHT
+                if (
+                    (col > 7)                  |
+                    board.isFull(col + 2, row) |
+                    board.isFull(col + 2, row - 1)
+                ) {
+                    return;
+                }
+
+                do O.show(tetromino, board, false);
+                do tetromino.setCol(col + 1);
+            }
+        }
+
         do O.show(tetromino, board, true);
-
-        return;
-    }
-
-    function void moveLeft(Tetromino tetromino, Board board) {
-        do O.show(tetromino, board, false);
-        do tetromino.setCol(tetromino.getCol() - 1);
-        do O.show(tetromino, board, true);
-
-        return;
-    }
-
-    function void moveRight(Tetromino tetromino, Board board) {
-        do O.show(tetromino, board, false);
-        do tetromino.setCol(tetromino.getCol() + 1);
-        do O.show(tetromino, board, true);
-
         return;
     }
 }
