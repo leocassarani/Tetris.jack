@@ -12,12 +12,8 @@ class TetrisGame {
         // +-----------------------+
         // (196, 254)     (316, 254)
 
-        do Screen.drawLine(195, 1, 317, 1);
-        do Screen.drawLine(195, 1, 195, 254);
-        do Screen.drawLine(317, 1, 317, 254);
-        do Screen.drawLine(195, 254, 317, 254);
-
         let board = Board.new(196, 2, 21, 12);
+        do board.drawOutline();
 
         let tetromino = Tetromino.new(0, 3, 19, board);
         do tetromino.show();
@@ -36,8 +32,6 @@ class TetrisGame {
         var char key;
         var int waited;
         var int type;
-
-        let type = 0;
 
         while (true) {
             while (key = 0) {

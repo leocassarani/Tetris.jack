@@ -327,27 +327,3 @@ pop local 1
 label IF_FALSE4
 push local 1
 return
-function Math.max 0
-push argument 0
-push argument 1
-gt
-if-goto IF_TRUE0
-goto IF_FALSE0
-label IF_TRUE0
-push argument 0
-pop argument 1
-label IF_FALSE0
-push argument 1
-return
-function Math.min 0
-push argument 0
-push argument 1
-lt
-if-goto IF_TRUE0
-goto IF_FALSE0
-label IF_TRUE0
-push argument 0
-pop argument 1
-label IF_FALSE0
-push argument 1
-return
