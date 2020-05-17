@@ -1,0 +1,43 @@
+class Grid {
+    static Array screen, draw;
+
+    function void init() {
+        let screen = 16384;
+
+        let draw = Array.new(8);
+        let draw[0] = -16;   // 0xFFF0
+        let draw[2] = 4095;  // 0x0FFF
+        let draw[4] = -4096; // 0xF000
+        let draw[5] = 255;   // 0x00FF
+        let draw[6] = -256;  // 0xFF00
+        let draw[7] = 15;    // 0x000F
+
+        return;
+    }
+
+    function void drawTile(int x, int y, int parity, boolean fill) {
+        var int i, max;
+
+        let i = (y * 32) + (x / 16);
+        let max = i + 416; // 13 * 32 = 416
+        let parity = parity + parity;
+
+        if (fill) {
+            while (i < max) {
+                let screen[i] = screen[i] | draw[parity];
+                let i = i + 1;
+                let screen[i] = screen[i] | draw[parity + 1];
+                let i = i + 31;
+            }
+        } else {
+            while (i < max) {
+                let screen[i] = screen[i] & ~(draw[parity]);
+                let i = i + 1;
+                let screen[i] = screen[i] & ~(draw[parity + 1]);
+                let i = i + 31;
+            }
+        }
+
+        return;
+    }
+}
