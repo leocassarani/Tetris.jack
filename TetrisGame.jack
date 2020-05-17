@@ -19,7 +19,7 @@ class TetrisGame {
 
         let board = Board.new(196, 2, 21, 12);
 
-        let tetromino = Tetromino.new(3, 20, board);
+        let tetromino = Tetromino.new(0, 3, 19, board);
         do tetromino.show();
 
         return this;
@@ -35,6 +35,9 @@ class TetrisGame {
     method void run() {
         var char key;
         var int waited;
+        var int type;
+
+        let type = 0;
 
         while (true) {
             while (key = 0) {
@@ -62,7 +65,8 @@ class TetrisGame {
                                 do tetromino.step();
                             } else {
                                 if (key = 128) { // enter
-                                    do tetromino.reset(3, 20);
+                                    let type = ~type;
+                                    do tetromino.reset(type, 3, 20);
                                     do tetromino.show();
                                 }
                             }

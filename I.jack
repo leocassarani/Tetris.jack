@@ -1,0 +1,68 @@
+class I {
+    function void show(Tetromino tetromino, Board board, boolean fill) {
+        var int col, row, rotation;
+
+        let col = tetromino.getCol();
+        let row = tetromino.getRow();
+        let rotation = tetromino.getRotation();
+
+        do board.setFill(fill);
+
+        if (rotation = 0) {
+            // ■■■■
+            do board.fill(col, row);
+            do board.fill(col + 1, row);
+            do board.fill(col + 2, row);
+            do board.fill(col + 3, row);
+        } else {
+            // ■
+            // ■
+            // ■
+            // ■
+            do board.fill(col, row);
+            do board.fill(col, row - 1);
+            do board.fill(col, row - 2);
+            do board.fill(col, row - 3);
+        }
+
+        return;
+    }
+
+    function void step(Tetromino tetromino, Board board) {
+        do I.show(tetromino, board, false);
+        do tetromino.setRow(tetromino.getRow() - 1);
+        do I.show(tetromino, board, true);
+        return;
+    }
+
+    function void moveLeft(Tetromino tetromino, Board board) {
+        do I.show(tetromino, board, false);
+        do tetromino.setCol(tetromino.getCol() - 1);
+        do I.show(tetromino, board, true);
+        return;
+    }
+
+    function void moveRight(Tetromino tetromino, Board board) {
+        do I.show(tetromino, board, false);
+        do tetromino.setCol(tetromino.getCol() + 1);
+        do I.show(tetromino, board, true);
+        return;
+    }
+
+    function void rotate(Tetromino tetromino, Board board) {
+        do I.show(tetromino, board, false);
+
+        if (tetromino.getRotation() = 0) {
+            do tetromino.setRow(tetromino.getRow() + 2);
+            do tetromino.setCol(tetromino.getCol() + 2);
+            do tetromino.setRotation(1);
+        } else {
+            do tetromino.setRow(tetromino.getRow() - 2);
+            do tetromino.setCol(tetromino.getCol() - 2);
+            do tetromino.setRotation(0);
+        }
+
+        do I.show(tetromino, board, true);
+        return;
+    }
+}

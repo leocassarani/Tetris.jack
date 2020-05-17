@@ -1,5 +1,6 @@
 class Board {
     field int minX, minY, rows, tile;
+    field boolean fill;
     field Array tiles;
 
     constructor Board new(int x, int y, int rowsArg, int tileArg) {
@@ -10,7 +11,7 @@ class Board {
         let minY = y;
         let rows = rowsArg;
         let tile = tileArg;
-
+        let fill = false;
         let tiles = Array.new(rows);
 
         let i = 0;
@@ -52,6 +53,11 @@ class Board {
         return tileRow[col];
     }
 
+    method void setFill(boolean fillArg) {
+        let fill = fillArg;
+        return;
+    }
+
     method void fill(int col, int row) {
         var int x, y;
         var Array tileRow;
@@ -59,30 +65,16 @@ class Board {
         let x = minX + (tile * col);
         let y = minY + (tile * (rows - (row + 1)));
 
-        do Screen.setColor(true);
+        do Screen.setColor(fill);
         do Screen.drawRectangle(x, y, x + tile, y + tile);
 
-        do Screen.setColor(false);
-        do Screen.drawRectangle(x + 4, y + 4, (x + tile) - 4, (y + tile) - 4);
+        if (fill) {
+            do Screen.setColor(false);
+            do Screen.drawRectangle(x + 4, y + 4, (x + tile) - 4, (y + tile) - 4);
+        }
 
         let tileRow = tiles[row];
-        let tileRow[col] = true;
-
-        return;
-    }
-
-    method void unfill(int col, int row) {
-        var int x, y;
-        var Array tileRow;
-
-        let x = minX + (tile * col);
-        let y = minY + (tile * (rows - (row + 1)));
-
-        do Screen.setColor(false);
-        do Screen.drawRectangle(x, y, x + tile, y + tile);
-
-        let tileRow = tiles[row];
-        let tileRow[col] = false;
+        let tileRow[col] = fill;
 
         return;
     }

@@ -1,8 +1,9 @@
 class Tetromino {
-    field int col, row, rotation;
+    field int type, col, row, rotation;
     field Board board;
 
-    constructor Tetromino new(int colArg, int rowArg, Board boardArg) {
+    constructor Tetromino new(int typeArg, int colArg, int rowArg, Board boardArg) {
+        let type = typeArg;
         let col = colArg;
         let row = rowArg;
         let board = boardArg;
@@ -42,7 +43,8 @@ class Tetromino {
         return;
     }
 
-    method void reset(int colArg, int rowArg) {
+    method void reset(int typeArg, int colArg, int rowArg) {
+        let type = typeArg;
         let col = colArg;
         let row = rowArg;
         let rotation = 0;
@@ -50,27 +52,47 @@ class Tetromino {
     }
 
     method void show() {
-        do J.show(this, board);
+        if (type = 0) {
+            do J.show(this, board, true);
+        } else {
+            do I.show(this, board, true);
+        }
         return;
     }
 
     method void step() {
-        do J.step(this, board);
+        if (type = 0) {
+            do J.step(this, board);
+        } else {
+            do I.step(this, board);
+        }
         return;
     }
 
     method void moveLeft() {
-        do J.moveLeft(this, board);
+        if (type = 0) {
+            do J.moveLeft(this, board);
+        } else {
+            do I.moveLeft(this, board);
+        }
         return;
     }
 
     method void moveRight() {
-        do J.moveRight(this, board);
+        if (type = 0) {
+            do J.moveRight(this, board);
+        } else {
+            do I.moveRight(this, board);
+        }
         return;
     }
 
     method void rotate() {
-        do J.rotate(this, board);
+        if (type = 0) {
+            do J.rotate(this, board);
+        } else {
+            do I.rotate(this, board);
+        }
         return;
     }
 }
