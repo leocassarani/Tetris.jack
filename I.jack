@@ -1,14 +1,13 @@
 class I {
     function void show(Tetromino tetromino, Board board, boolean fill) {
-        var int col, row, rotation;
+        var int col, row;
 
         let col = tetromino.getCol();
         let row = tetromino.getRow();
-        let rotation = tetromino.getRotation();
 
         do board.setFill(fill);
 
-        if (rotation = 0) {
+        if (tetromino.getRotation() = 0) {
             // ■■■■
             do board.fill(col, row);
             do board.fill(col + 1, row);

@@ -1,0 +1,43 @@
+class O {
+    function void show(Tetromino tetromino, Board board, boolean fill) {
+        var int col, row;
+
+        let col = tetromino.getCol();
+        let row = tetromino.getRow();
+
+        do board.setFill(fill);
+
+        // ■■
+        // ■■
+        do board.fill(col, row);
+        do board.fill(col + 1, row);
+        do board.fill(col, row - 1);
+        do board.fill(col + 1, row - 1);
+
+        return;
+    }
+
+    function void step(Tetromino tetromino, Board board) {
+        do O.show(tetromino, board, false);
+        do tetromino.setRow(tetromino.getRow() - 1);
+        do O.show(tetromino, board, true);
+
+        return;
+    }
+
+    function void moveLeft(Tetromino tetromino, Board board) {
+        do O.show(tetromino, board, false);
+        do tetromino.setCol(tetromino.getCol() - 1);
+        do O.show(tetromino, board, true);
+
+        return;
+    }
+
+    function void moveRight(Tetromino tetromino, Board board) {
+        do O.show(tetromino, board, false);
+        do tetromino.setCol(tetromino.getCol() + 1);
+        do O.show(tetromino, board, true);
+
+        return;
+    }
+}

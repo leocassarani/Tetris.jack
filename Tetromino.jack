@@ -55,7 +55,11 @@ class Tetromino {
         if (type = 0) {
             do J.show(this, board, true);
         } else {
-            do I.show(this, board, true);
+            if (type = 1) {
+                do I.show(this, board, true);
+            } else {
+                do O.show(this, board, true);
+            }
         }
         return;
     }
@@ -64,7 +68,11 @@ class Tetromino {
         if (type = 0) {
             do J.step(this, board);
         } else {
-            do I.step(this, board);
+            if (type = 1) {
+                do I.step(this, board);
+            } else {
+                do O.step(this, board);
+            }
         }
         return;
     }
@@ -73,7 +81,11 @@ class Tetromino {
         if (type = 0) {
             do J.moveLeft(this, board);
         } else {
-            do I.moveLeft(this, board);
+            if (type = 1) {
+                do I.moveLeft(this, board);
+            } else {
+                do O.moveLeft(this, board);
+            }
         }
         return;
     }
@@ -82,7 +94,11 @@ class Tetromino {
         if (type = 0) {
             do J.moveRight(this, board);
         } else {
-            do I.moveRight(this, board);
+            if (type = 1) {
+                do I.moveRight(this, board);
+            } else {
+                do O.moveRight(this, board);
+            }
         }
         return;
     }
@@ -91,7 +107,9 @@ class Tetromino {
         if (type = 0) {
             do J.rotate(this, board);
         } else {
-            do I.rotate(this, board);
+            if (type = 1) {
+                do I.rotate(this, board);
+            }
         }
         return;
     }
