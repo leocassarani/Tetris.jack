@@ -43,45 +43,6 @@ class Board {
         return;
     }
 
-    method void drawOutline() {
-        var int i;
-        var Array screen;
-
-        let screen = 16384;
-
-        // do Screen.drawLine(195, 1, 317, 1);
-        let screen[44] = -8;
-        let i = 45;
-        while (i < 51) {
-            let screen[i] = -1;
-            let i = i + 1;
-        }
-        let screen[51] = 16383;
-
-        // do Screen.drawLine(195, 254, 317, 254);
-        let screen[8140] = -8;
-        let i = 8141;
-        while (i < 8147) {
-            let screen[i] = -1;
-            let i = i + 1;
-        }
-        let screen[8147] = 16383;
-
-        // do Screen.drawLine(195, 1, 195, 254);
-        let i = 76;
-        while (i < 8128) {
-            let screen[i] = 8;
-            let i = i + 32;
-        }
-
-        // do Screen.drawLine(317, 1, 317, 254);
-        let i = 83;
-        while (i < 8147) {
-            let screen[i] = 8192;
-            let i = i + 32;
-        }
-    }
-
     method boolean isFull(int col, int row) {
         var Array tileRow;
 
@@ -109,16 +70,76 @@ class Board {
         let x = minX + (tile * col);
         let y = minY + (tile * (rows - (row + 1)));
 
-        do Screen.setColor(fill);
-        do Screen.drawRectangle(x, y, x + tile, y + tile);
-
         if (fill) {
+            do drawTile(col, row);
             do Screen.setColor(false);
             do Screen.drawRectangle(x + 4, y + 4, (x + tile) - 4, (y + tile) - 4);
+        } else {
+            do Screen.setColor(fill);
+            do Screen.drawRectangle(x, y, x + tile, y + tile);
         }
 
         let tileRow = tiles[row];
         let tileRow[col] = fill;
+
+        return;
+    }
+
+    method void drawTile(int col, int row) {
+        var int x, y, i, max, parity;
+        var Array screen;
+
+        let screen = 16384;
+
+        let x = minX + (tile * col);
+        let y = minY + (tile * (rows - (row + 1)));
+
+        let parity = (col & 3);
+
+        let i = (y * 32) + (x / 16);
+        let max = i + 416; // 13 * 32 = 416
+
+        while (i < max) {
+            if (parity = 0) {
+                let screen[i] = screen[i] | -16; // 0xFFF0
+            } else {
+                if (parity = 1) {
+                    let screen[i] = screen[i] | 4095; // 0x0FFF
+                } else {
+                    if (parity = 2) {
+                        let screen[i] = screen[i] | -4096; // 0xF000
+                        let screen[(i + 1)] = screen[(i + 1)] | 255; // 0x00FF
+                    } else {
+                        let screen[i] = screen[i] | -256; // 0xFF00
+                        let screen[(i + 1)] = screen[(i + 1)] | 15; // 0x000F
+                    }
+                }
+            }
+            let i = i + 32;
+        }
+
+        return;
+    }
+
+    method void drawOutline() {
+        var int i;
+        var Array screen;
+
+        let screen = 16384;
+
+        // Equivalent to: Screen.drawLine(195, 1, 195, 254)
+        let i = 44;
+        while (i < 8160) {
+            let screen[i] = 8;
+            let i = i + 32;
+        }
+
+        // Equivalent to: Screen.drawLine(317, 1, 317, 254)
+        let i = 51;
+        while (i < 8160) {
+            let screen[i] = 8192;
+            let i = i + 32;
+        }
 
         return;
     }

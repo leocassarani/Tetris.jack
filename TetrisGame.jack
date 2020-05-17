@@ -71,6 +71,8 @@ class TetrisGame {
                     }
                 }
 
+                do board.clearFullLines();
+
                 do Sys.wait(100);
 
                 let waited = waited + 1;
