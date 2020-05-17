@@ -29,36 +29,129 @@ class I {
     }
 
     function void step(Tetromino tetromino, Board board) {
+        var int col, row;
+
+        let col = tetromino.getCol();
+        let row = tetromino.getRow();
+
+        if (tetromino.getRotation() = 0) {
+            if (
+                (row = 0)                      |
+                board.isFull(col, row - 1)     |
+                board.isFull(col + 1, row - 1) |
+                board.isFull(col + 2, row - 1) |
+                board.isFull(col + 3, row - 1)
+            ) {
+                return;
+            }
+        } else {
+            if ((row < 4) | board.isFull(col, row - 4)) {
+                return;
+            }
+        }
+
         do I.show(tetromino, board, false);
-        do tetromino.setRow(tetromino.getRow() - 1);
+        do tetromino.setRow(row - 1);
         do I.show(tetromino, board, true);
+
         return;
     }
 
     function void moveLeft(Tetromino tetromino, Board board) {
+        var int col, row;
+
+        let col = tetromino.getCol();
+        let row = tetromino.getRow();
+
+        if (col = 0) {
+            return;
+        }
+
+        if (tetromino.getRotation() = 0) {
+            if (board.isFull(col - 1, row)) {
+                return;
+            }
+        } else {
+            if (
+                board.isFull(col - 1, row)     |
+                board.isFull(col - 1, row - 1) |
+                board.isFull(col - 1, row - 2) |
+                board.isFull(col - 1, row - 3)
+            ) {
+                return;
+            }
+        }
+
         do I.show(tetromino, board, false);
-        do tetromino.setCol(tetromino.getCol() - 1);
+        do tetromino.setCol(col - 1);
         do I.show(tetromino, board, true);
+
         return;
     }
 
     function void moveRight(Tetromino tetromino, Board board) {
+        var int col, row;
+
+        let col = tetromino.getCol();
+        let row = tetromino.getRow();
+
+        if (tetromino.getRotation() = 0) {
+            if ((col > 5) | board.isFull(col + 4, row)) {
+                return;
+            }
+        } else {
+            if (
+                (col = 9)                      |
+                board.isFull(col + 1, row)     |
+                board.isFull(col + 1, row - 1) |
+                board.isFull(col + 1, row - 2) |
+                board.isFull(col + 1, row - 3)
+            ) {
+                return;
+            }
+        }
+
         do I.show(tetromino, board, false);
-        do tetromino.setCol(tetromino.getCol() + 1);
+        do tetromino.setCol(col + 1);
         do I.show(tetromino, board, true);
+
         return;
     }
 
     function void rotate(Tetromino tetromino, Board board) {
-        do I.show(tetromino, board, false);
+        var int col, row;
+
+        let col = tetromino.getCol();
+        let row = tetromino.getRow();
 
         if (tetromino.getRotation() = 0) {
-            do tetromino.setRow(tetromino.getRow() + 2);
-            do tetromino.setCol(tetromino.getCol() + 2);
+            if (
+                (row < 1) |
+                board.isFull(col + 2, row + 2) |
+                board.isFull(col + 2, row + 1) |
+                board.isFull(col + 2, row - 1)
+            ) {
+                return;
+            }
+
+            do I.show(tetromino, board, false);
+            do tetromino.setRow(row + 2);
+            do tetromino.setCol(col + 2);
             do tetromino.setRotation(1);
         } else {
-            do tetromino.setRow(tetromino.getRow() - 2);
-            do tetromino.setCol(tetromino.getCol() - 2);
+            if (
+                (col < 2) |
+                (col = 9) |
+                board.isFull(col - 2, row) |
+                board.isFull(col - 1, row) |
+                board.isFull(col + 2, row)
+            ) {
+                return;
+            }
+
+            do I.show(tetromino, board, false);
+            do tetromino.setRow(row - 2);
+            do tetromino.setCol(col - 2);
             do tetromino.setRotation(0);
         }
 

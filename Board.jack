@@ -49,6 +49,11 @@ class Board {
 
     method boolean isFull(int col, int row) {
         var Array tileRow;
+
+        if (row > (rows - 1)) {
+            return false;
+        }
+
         let tileRow = tiles[row];
         return tileRow[col];
     }
@@ -61,6 +66,10 @@ class Board {
     method void fill(int col, int row) {
         var int x, y;
         var Array tileRow;
+
+        if (row > (rows - 1)) {
+            return;
+        }
 
         let x = minX + (tile * col);
         let y = minY + (tile * (rows - (row + 1)));
