@@ -30,10 +30,12 @@ class TetrisGame {
 
     method void run() {
         var char key;
-        var int waited;
-        var int type;
+        var int waited, type;
+        var boolean ok;
 
         while (true) {
+            let ok = false;
+
             while (key = 0) {
                 let key = Keyboard.keyPressed();
                 do Sys.wait(100);
@@ -56,7 +58,7 @@ class TetrisGame {
                             do tetromino.rotate();
                         } else {
                             if (key = 133) { // down
-                                do tetromino.step();
+                                let ok = tetromino.step();
                             } else {
                                 if (key = 128) { // enter
                                     let type = type + 1;
@@ -71,7 +73,9 @@ class TetrisGame {
                     }
                 }
 
-                do board.clearFullLines();
+                if (~(ok)) {
+                    do board.clearFullLines();
+                }
 
                 do Sys.wait(100);
 

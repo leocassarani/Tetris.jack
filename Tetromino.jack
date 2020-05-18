@@ -64,17 +64,16 @@ class Tetromino {
         return;
     }
 
-    method void step() {
+    method boolean step() {
         if (type = 0) {
-            do J.move(this, board, 0);
+            return J.move(this, board, 0);
         } else {
             if (type = 1) {
-                do I.move(this, board, 0);
+                return I.move(this, board, 0);
             } else {
-                do O.move(this, board, 0);
+                return O.move(this, board, 0);
             }
         }
-        return;
     }
 
     method void moveLeft() {

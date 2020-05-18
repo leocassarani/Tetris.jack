@@ -36,24 +36,30 @@ class Grid {
     }
 
     function void drawTile(int x, int y, int parity, boolean fill) {
-        var int i, max;
+        var int i, max, wordOne, wordTwo;
 
         let i = (y * 32) + (x / 16);
         let max = i + 416; // 13 * 32 = 416
+
         let parity = parity + parity;
+        let wordOne = draw[parity];
+        let wordTwo = draw[parity + 1];
 
         if (fill) {
             while (i < max) {
-                let screen[i] = screen[i] | draw[parity];
+                let screen[i] = screen[i] | wordOne;
                 let i = i + 1;
-                let screen[i] = screen[i] | draw[parity + 1];
+                let screen[i] = screen[i] | wordTwo;
                 let i = i + 31;
             }
         } else {
+            let wordOne = ~(wordOne);
+            let wordTwo = ~(wordTwo);
+
             while (i < max) {
-                let screen[i] = screen[i] & ~(draw[parity]);
+                let screen[i] = screen[i] & wordOne;
                 let i = i + 1;
-                let screen[i] = screen[i] & ~(draw[parity + 1]);
+                let screen[i] = screen[i] & wordTwo;
                 let i = i + 31;
             }
         }

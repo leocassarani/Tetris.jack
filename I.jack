@@ -28,7 +28,7 @@ class I {
     }
 
     // direction: 0 = down, 1 = left, 2 = right
-    function void move(Tetromino tetromino, Board board, int direction) {
+    function boolean move(Tetromino tetromino, Board board, int direction) {
         var int col, row;
 
         let col = tetromino.getCol();
@@ -44,11 +44,11 @@ class I {
                     board.isFull(col + 2, row - 1) |
                     board.isFull(col + 3, row - 1)
                 ) {
-                    return;
+                    return false;
                 }
             } else {
                 if ((row < 4) | board.isFull(col, row - 4)) {
-                    return;
+                    return false;
                 }
             }
 
@@ -58,12 +58,12 @@ class I {
             if (direction = 1) {
                 // LEFT
                 if (col = 0) {
-                    return;
+                    return false;
                 }
 
                 if (tetromino.getRotation() = 0) {
                     if (board.isFull(col - 1, row)) {
-                        return;
+                        return false;
                     }
                 } else {
                     if (
@@ -72,7 +72,7 @@ class I {
                         board.isFull(col - 1, row - 2) |
                         board.isFull(col - 1, row - 3)
                     ) {
-                        return;
+                        return false;
                     }
                 }
 
@@ -82,7 +82,7 @@ class I {
                 // RIGHT
                 if (tetromino.getRotation() = 0) {
                     if ((col > 5) | board.isFull(col + 4, row)) {
-                        return;
+                        return false;
                     }
                 } else {
                     if (
@@ -92,7 +92,7 @@ class I {
                         board.isFull(col + 1, row - 2) |
                         board.isFull(col + 1, row - 3)
                     ) {
-                        return;
+                        return false;
                     }
                 }
 
@@ -102,7 +102,7 @@ class I {
         }
 
         do I.show(tetromino, board, true);
-        return;
+        return true;
     }
 
     function void rotate(Tetromino tetromino, Board board) {
