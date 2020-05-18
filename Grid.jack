@@ -15,6 +15,26 @@ class Grid {
         return;
     }
 
+    function void drawOutline() {
+        var int i;
+
+        // Equivalent to: Screen.drawLine(195, 1, 195, 254)
+        let i = 44;
+        while (i < 8160) {
+            let screen[i] = 4;
+            let i = i + 32;
+        }
+
+        // Equivalent to: Screen.drawLine(317, 1, 317, 254)
+        let i = 51;
+        while (i < 8160) {
+            let screen[i] = 8192;
+            let i = i + 32;
+        }
+
+        return;
+    }
+
     function void drawTile(int x, int y, int parity, boolean fill) {
         var int i, max;
 
