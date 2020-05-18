@@ -73,7 +73,7 @@ class Board {
         return;
     }
 
-    method void drawTile(int col, int row) {
+    method void drawTile(int col, int row, boolean fill) {
         var int x, y, parity;
 
         let x = minX + (tile * col);
@@ -102,6 +102,61 @@ class Board {
         while (i < 8160) {
             let screen[i] = 8192;
             let i = i + 32;
+        }
+
+        return;
+    }
+
+    method void clearFullLines() {
+        var int i, j;
+        var boolean full;
+        var Array row;
+
+        while (i < rows) {
+            let row = tiles[i];
+            let full = true;
+            let j = 0;
+
+            while (j < 10) {
+                let full = full & row[j];
+                let j = j + 1;
+            }
+
+            if (full) {
+                do shiftLines(i + 1);
+            } else {
+                let i = i + 1;
+            }
+        }
+
+        return;
+    }
+
+    method void shiftLines(int i) {
+        var int j;
+        var Array src, dst;
+
+        while (i < rows) {
+            let src = tiles[i];
+            let dst = tiles[i - 1];
+            let j = 0;
+
+            while (j < 10) {
+                let dst[j] = src[j];
+                let src[j] = false;
+                do drawTile(j, i - 1, dst[j]);
+                let j = j + 1;
+            }
+
+            let i = i + 1;
+        }
+
+        let j = 0;
+        let i = i - 1;
+
+        while (j < 10) {
+            do drawTile(j, i, false);
+            let j = j + 1;
         }
 
         return;
