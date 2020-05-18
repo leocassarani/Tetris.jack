@@ -1,6 +1,8 @@
 class Main {
     function void main() {
         var TetrisGame game;
+
+        do Tetromino.init();
         do Grid.init();
 
         let game = TetrisGame.new();

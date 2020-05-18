@@ -1,45 +1,45 @@
-class J {
+class L {
     static Array tiles;
 
     function void init() {
         var Array tmp;
         let tiles = Array.new(4);
 
-        // ■
+        //   ■
         // ■■■
         let tmp = Array.new(9);
-        let tmp[0] = true;
+        let tmp[2] = true;
         let tmp[3] = true;
         let tmp[4] = true;
         let tmp[5] = true;
         let tiles[0] = tmp;
 
+        // ■
+        // ■
         // ■■
-        // ■
-        // ■
         let tmp = Array.new(9);
         let tmp[1] = true;
-        let tmp[2] = true;
         let tmp[4] = true;
         let tmp[7] = true;
+        let tmp[8] = true;
         let tiles[1] = tmp;
 
         // ■■■
-        //   ■
+        // ■
         let tmp = Array.new(9);
         let tmp[3] = true;
         let tmp[4] = true;
         let tmp[5] = true;
-        let tmp[8] = true;
+        let tmp[6] = true;
         let tiles[2] = tmp;
 
-        //  ■
-        //  ■
         // ■■
+        //  ■
+        //  ■
         let tmp = Array.new(9);
+        let tmp[0] = true;
         let tmp[1] = true;
         let tmp[4] = true;
-        let tmp[6] = true;
         let tmp[7] = true;
         let tiles[3] = tmp;
 

@@ -46,8 +46,12 @@ class Board {
     method boolean isFull(int col, int row) {
         var Array tileRow;
 
-        if (row > (rows - 1)) {
-            return false;
+        if ((col < 0) | (col > 9)) {
+            return true;
+        }
+
+        if ((row < 0) | (row > (rows - 1))) {
+            return true;
         }
 
         let tileRow = tiles[row];
