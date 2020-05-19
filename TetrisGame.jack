@@ -1,6 +1,7 @@
 class TetrisGame {
     field Board board;
     field Tetromino tetromino;
+    field int type;
 
     constructor TetrisGame new() {
         do Screen.clearScreen();
@@ -18,6 +19,8 @@ class TetrisGame {
         let tetromino = Tetromino.new(0, 3, 19, board);
         do tetromino.show();
 
+        let type = 0;
+
         return this;
     }
 
@@ -30,19 +33,16 @@ class TetrisGame {
 
     method void run() {
         var char key;
-        var int waited, type;
-        var boolean ok;
+        var int waited;
 
         while (true) {
-            let ok = false;
-
             while (key = 0) {
                 let key = Keyboard.keyPressed();
                 do Sys.wait(100);
 
                 let waited = waited + 1;
-                if (waited = 10) {
-                    //do tetromino.step();
+                if (waited = 5) {
+                    do step();
                     let waited = 0;
                 }
             }
@@ -58,36 +58,41 @@ class TetrisGame {
                             do tetromino.rotate();
                         } else {
                             if (key = 133) { // down
-                                let ok = tetromino.step();
-                            } else {
-                                if (key = 128) { // enter
-                                    let type = type + 1;
-                                    if (type > 6) {
-                                        let type = 0;
-                                    }
-                                    do tetromino.reset(type, 3, 20);
-                                    do tetromino.show();
-                                }
+                                do step();
                             }
                         }
                     }
                 }
 
-                if (~(ok)) {
-                    do board.clearFullLines();
-                }
-
                 do Sys.wait(100);
 
                 let waited = waited + 1;
-                if (waited = 10) {
-                    //do tetromino.step();
+                if (waited = 5) {
+                    do step();
                     let waited = 0;
                 }
 
                 let key = Keyboard.keyPressed();
             }
         }
+
+        return;
+    }
+
+    method void step() {
+        if (tetromino.step()) {
+            return;
+        }
+
+        do board.clearFullLines();
+
+        let type = type + 1;
+        if (type > 6) {
+            let type = 0;
+        }
+
+        do tetromino.reset(type, 3, 20);
+        do tetromino.show();
 
         return;
     }
