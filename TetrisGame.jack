@@ -62,7 +62,7 @@ class TetrisGame {
                             } else {
                                 if (key = 128) { // enter
                                     let type = type + 1;
-                                    if (type > 3) {
+                                    if (type > 6) {
                                         let type = 0;
                                     }
                                     do tetromino.reset(type, 3, 20);

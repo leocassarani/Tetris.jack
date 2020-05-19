@@ -7,6 +7,9 @@ class Tetromino {
         do J.init();
         do L.init();
         do O.init();
+        do S.init();
+        do T.init();
+        do Z.init();
         return;
     }
 
@@ -226,7 +229,19 @@ class Tetromino {
                 if (type = 2) {
                     return L.tiles(rotationArg);
                 } else {
-                    return O.tiles(rotationArg);
+                    if (type = 3) {
+                        return O.tiles(rotationArg);
+                    } else {
+                        if (type = 4) {
+                            return S.tiles(rotationArg);
+                        } else {
+                            if (type = 5) {
+                                return T.tiles(rotationArg);
+                            } else {
+                                return Z.tiles(rotationArg);
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -237,12 +252,24 @@ class Tetromino {
             return I.size();
         } else {
             if (type = 1) {
-                return L.size();
+                return J.size();
             } else {
                 if (type = 2) {
                     return L.size();
                 } else {
-                    return O.size();
+                    if (type = 3) {
+                        return O.size();
+                    } else {
+                        if (type = 4) {
+                            return S.size();
+                        } else {
+                            if (type = 5) {
+                                return T.size();
+                            } else {
+                                return Z.size();
+                            }
+                        }
+                    }
                 }
             }
         }

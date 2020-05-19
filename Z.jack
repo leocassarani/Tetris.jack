@@ -1,0 +1,37 @@
+class Z {
+    static Array tiles;
+
+    function void init() {
+        var Array tmp;
+        let tiles = Array.new(2);
+
+        // ■■
+        //  ■■
+        let tmp = Array.new(9);
+        let tmp[3] = true;
+        let tmp[4] = true;
+        let tmp[7] = true;
+        let tmp[8] = true;
+        let tiles[0] = tmp;
+
+        //  ■
+        // ■■
+        // ■
+        let tmp = Array.new(9);
+        let tmp[2] = true;
+        let tmp[4] = true;
+        let tmp[5] = true;
+        let tmp[7] = true;
+        let tiles[1] = tmp;
+
+        return;
+    }
+
+    function Array tiles(int rotation) {
+        return tiles[rotation & 1];
+    }
+
+    function int size() {
+        return 3;
+    }
+}
