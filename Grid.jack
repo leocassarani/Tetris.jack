@@ -18,16 +18,16 @@ class Grid {
     function void drawOutline() {
         var int i;
 
-        // Equivalent to: Screen.drawLine(195, 1, 195, 254)
-        let i = 44;
-        while (i < 8160) {
+        // Equivalent to: Screen.drawLine(195, 2, 195, 254)
+        let i = 76;
+        while (i < 8128) {
             let screen[i] = 4;
             let i = i + 32;
         }
 
-        // Equivalent to: Screen.drawLine(317, 1, 317, 254)
-        let i = 51;
-        while (i < 8160) {
+        // Equivalent to: Screen.drawLine(317, 2, 317, 254)
+        let i = 83;
+        while (i < 8128) {
             let screen[i] = 8192;
             let i = i + 32;
         }
@@ -39,7 +39,7 @@ class Grid {
         var int i, max, wordOne, wordTwo;
 
         let i = (y * 32) + (x / 16);
-        let max = i + 416; // 13 * 32 = 416
+        let max = i + 384; // i + (12 * 32)
 
         let parity = parity + parity;
         let wordOne = draw[parity];
