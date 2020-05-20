@@ -93,8 +93,8 @@ class Board {
         return;
     }
 
-    method void clearFullLines() {
-        var int i, j;
+    method int clearFullLines() {
+        var int cleared, i, j;
         var boolean full;
         var Array row;
 
@@ -104,18 +104,21 @@ class Board {
             let j = 0;
 
             while (j < 10) {
-                let full = full & row[j];
+                if (~(row[j])) {
+                    let full = false;
+                }
                 let j = j + 1;
             }
 
             if (full) {
+                let cleared = cleared + 1;
                 do shiftLines(i + 1);
             } else {
                 let i = i + 1;
             }
         }
 
-        return;
+        return cleared;
     }
 
     method void shiftLines(int i) {

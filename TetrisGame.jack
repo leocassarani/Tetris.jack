@@ -1,7 +1,7 @@
 class TetrisGame {
     field Board board;
     field Tetromino tetromino;
-    field int type;
+    field int type, cleared;
 
     constructor TetrisGame new() {
         do Screen.clearScreen();
@@ -20,6 +20,9 @@ class TetrisGame {
         do tetromino.show();
 
         let type = 0;
+        let cleared = 0;
+
+        do printScore();
 
         return this;
     }
@@ -84,7 +87,8 @@ class TetrisGame {
             return;
         }
 
-        do board.clearFullLines();
+        let cleared = cleared + board.clearFullLines();
+        do printScore();
 
         let type = type + 1;
         if (type > 6) {
@@ -93,6 +97,22 @@ class TetrisGame {
 
         do tetromino.reset(type, 3, 20);
         do tetromino.show();
+
+        return;
+    }
+
+    method void printScore() {
+        do Output.moveCursor(4, 8);
+        do Output.printString("Score: ");
+        do Output.printInt(0);
+
+        do Output.moveCursor(11, 8);
+        do Output.printString("Level: ");
+        do Output.printInt(0);
+
+        do Output.moveCursor(18, 8);
+        do Output.printString("Lines: ");
+        do Output.printInt(cleared);
 
         return;
     }
