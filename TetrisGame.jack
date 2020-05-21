@@ -1,7 +1,7 @@
 class TetrisGame {
     field Board board;
     field Tetromino tetromino;
-    field int type, cleared, level;
+    field int type, cleared, level, difficulty;
 
     constructor TetrisGame new() {
         do Screen.clearScreen();
@@ -22,6 +22,7 @@ class TetrisGame {
         let type = 0;
         let cleared = 0;
         let level = 0;
+        let difficulty = 12;
 
         do printScore();
 
@@ -39,15 +40,17 @@ class TetrisGame {
         var char key;
         var int waited;
 
+        let waited = difficulty;
+
         while (true) {
             while (key = 0) {
                 let key = Keyboard.keyPressed();
                 do Sys.wait(100);
 
-                let waited = waited + 1;
-                if (waited = 5) {
+                let waited = waited - 1;
+                if (waited = 0) {
                     do step();
-                    let waited = 0;
+                    let waited = difficulty;
                 }
             }
 
@@ -70,10 +73,10 @@ class TetrisGame {
 
                 do Sys.wait(100);
 
-                let waited = waited + 1;
-                if (waited = 5) {
+                let waited = waited - 1;
+                if (waited = 0) {
                     do step();
-                    let waited = 0;
+                    let waited = difficulty;
                 }
 
                 let key = Keyboard.keyPressed();
@@ -84,12 +87,27 @@ class TetrisGame {
     }
 
     method void step() {
+        var int lines;
+
         if (tetromino.step()) {
             return;
         }
 
-        let cleared = cleared + board.clearFullLines();
-        do printScore();
+        let lines = board.clearFullLines();
+
+        if (~(lines = 0)) {
+            let cleared = cleared + lines;
+
+            if (cleared < 100) {
+                let level = cleared / 10;
+            } else {
+                let level = 10;
+            }
+
+            let difficulty = 12 - level;
+
+            do printScore();
+        }
 
         let type = type + 1;
         if (type > 6) {
