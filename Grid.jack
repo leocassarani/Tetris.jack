@@ -66,4 +66,36 @@ class Grid {
 
         return;
     }
+
+    function void drawPreview(Array tiles, int size) {
+        var int col, row, i, x, y, parity, fill;
+
+        let y = 106;
+
+        while (row < 4) {
+            let col = 0;
+            let x = 420;
+
+            while (col < 4) {
+                let parity = col & 3;
+
+                if ((row < size) & (col < size)) {
+                    let fill = tiles[i];
+                    let i = i + 1;
+                } else {
+                    let fill = false;
+                }
+
+                do Grid.drawTile(x, y, parity, fill);
+
+                let col = col + 1;
+                let x = x + 12;
+            }
+
+            let row = row + 1;
+            let y = y + 12;
+        }
+
+        return;
+    }
 }

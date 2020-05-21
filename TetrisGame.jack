@@ -24,7 +24,11 @@ class TetrisGame {
         let level = 0;
         let difficulty = 12;
 
+        do Output.moveCursor(11, 47);
+        do Output.printString("Next:");
+
         do printScore();
+        do showNextTetromino();
 
         return this;
     }
@@ -117,6 +121,8 @@ class TetrisGame {
         do tetromino.reset(type, 3, 20);
         do tetromino.show();
 
+        do showNextTetromino();
+
         return;
     }
 
@@ -128,6 +134,23 @@ class TetrisGame {
         do Output.moveCursor(15, 8);
         do Output.printString("Lines: ");
         do Output.printInt(cleared);
+
+        return;
+    }
+
+    method void showNextTetromino() {
+        var int next, size;
+        var Array tiles;
+
+        let next = type + 1;
+        if (next > 6) {
+            let next = 0;
+        }
+
+        let tiles = Tetromino.tiles(next, 0);
+        let size = Tetromino.size(next);
+
+        do Grid.drawPreview(tiles, size);
 
         return;
     }

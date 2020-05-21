@@ -39,8 +39,8 @@ class Tetromino {
         var int x, y, i, size;
         var Array tiles;
 
-        let tiles = _tiles(rotation);
-        let size = _size();
+        let tiles = Tetromino.tiles(type, rotation);
+        let size = Tetromino.size(type);
 
         do board.setFill(fill);
 
@@ -66,8 +66,8 @@ class Tetromino {
         var int x, y, i, size, max, tile;
         var Array tiles;
 
-        let tiles = _tiles(rotation);
-        let size = _size();
+        let tiles = Tetromino.tiles(type, rotation);
+        let size = Tetromino.size(type);
 
         let max = size - 1;
 
@@ -107,8 +107,8 @@ class Tetromino {
         var int x, y, i, size, tile;
         var Array tiles;
 
-        let tiles = _tiles(rotation);
-        let size = _size();
+        let tiles = Tetromino.tiles(type, rotation);
+        let size = Tetromino.size(type);
 
         while (y < size) {
             let x = 0;
@@ -146,8 +146,8 @@ class Tetromino {
         var int x, y, i, size, max, tile;
         var Array tiles;
 
-        let tiles = _tiles(rotation);
-        let size = _size();
+        let tiles = Tetromino.tiles(type, rotation);
+        let size = Tetromino.size(type);
 
         let max = size - 1;
 
@@ -187,11 +187,11 @@ class Tetromino {
         var int x, y, i, size, nextRotation;
         var Array cur, next;
 
-        let cur = _tiles(rotation);
-        let size = _size();
+        let cur = Tetromino.tiles(type, rotation);
+        let size = Tetromino.size(type);
 
         let nextRotation = (rotation + 1) & 3; // (rotation + 1) mod 4
-        let next = _tiles(nextRotation);
+        let next = tiles(nextRotation);
 
         while (y < size) {
             let x = 0;
@@ -219,26 +219,26 @@ class Tetromino {
         return;
     }
 
-    method Array _tiles(int rotationArg) {
+    function Array tiles(int type, int rotation) {
         if (type = 0) {
-            return I.tiles(rotationArg);
+            return I.tiles(rotation);
         } else {
             if (type = 1) {
-                return J.tiles(rotationArg);
+                return J.tiles(rotation);
             } else {
                 if (type = 2) {
-                    return L.tiles(rotationArg);
+                    return L.tiles(rotation);
                 } else {
                     if (type = 3) {
-                        return O.tiles(rotationArg);
+                        return O.tiles(rotation);
                     } else {
                         if (type = 4) {
-                            return S.tiles(rotationArg);
+                            return S.tiles(rotation);
                         } else {
                             if (type = 5) {
-                                return T.tiles(rotationArg);
-                            } else {
-                                return Z.tiles(rotationArg);
+                                return T.tiles(rotation);
+                            } else { // type = 6
+                                return Z.tiles(rotation);
                             }
                         }
                     }
@@ -247,7 +247,7 @@ class Tetromino {
         }
     }
 
-    method int _size() {
+    function int size(int type) {
         if (type = 0) {
             return I.size();
         } else {
@@ -265,7 +265,7 @@ class Tetromino {
                         } else {
                             if (type = 5) {
                                 return T.size();
-                            } else {
+                            } else { // type = 6
                                 return Z.size();
                             }
                         }

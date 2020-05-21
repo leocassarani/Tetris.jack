@@ -78,13 +78,12 @@ class Board {
     }
 
     method void drawTile(int col, int row, boolean fill) {
-        var int x, y, parity;
+        var int x, y;
 
         let x = minX + (tile * col);
         let y = minY + (tile * (rows - (row + 1)));
-        let parity = col & 3;
 
-        do Grid.drawTile(x, y, parity, fill);
+        do Grid.drawTile(x, y, col & 3, fill);
         return;
     }
 
