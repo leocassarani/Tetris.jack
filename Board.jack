@@ -25,6 +25,8 @@ class Board {
             let i = i + 1;
         }
 
+        do Grid.drawOutline();
+
         return this;
     }
 
@@ -86,11 +88,6 @@ class Board {
         return;
     }
 
-    method void drawOutline() {
-        do Grid.drawOutline();
-        return;
-    }
-
     method int clearFullLines() {
         var int cleared, i, j;
         var boolean full;
@@ -102,7 +99,7 @@ class Board {
             let j = 0;
 
             while (j < 10) {
-                if (~(row[j])) {
+                if (~row[j]) {
                     let full = false;
                 }
                 let j = j + 1;
@@ -142,10 +139,20 @@ class Board {
         let i = i - 1;
 
         while (j < 10) {
+            // The last (topmost) line always ends up empty.
             do drawTile(j, i, false);
             let j = j + 1;
         }
 
+        return;
+    }
+
+    method void clearLine(int row) {
+        var int col;
+        while (col < 10) {
+            do drawTile(col, row, false);
+            let col = col + 1;
+        }
         return;
     }
 }

@@ -53,8 +53,8 @@ class Grid {
                 let i = i + 31;
             }
         } else {
-            let wordOne = ~(wordOne);
-            let wordTwo = ~(wordTwo);
+            let wordOne = ~wordOne;
+            let wordTwo = ~wordTwo;
 
             while (i < max) {
                 let screen[i] = screen[i] & wordOne;

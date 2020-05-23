@@ -2,12 +2,12 @@ class TetrisGame {
     field Board board;
     field Tetromino tetromino;
     field int type, cleared, level, difficulty;
+    field boolean exit;
 
     constructor TetrisGame new() {
         do Screen.clearScreen();
 
         let board = Board.new(196, 2, 21);
-        do board.drawOutline();
 
         let tetromino = Tetromino.new(0, 3, 19, board);
         do tetromino.show();
@@ -16,12 +16,13 @@ class TetrisGame {
         let cleared = 0;
         let level = 0;
         let difficulty = 12;
+        let exit = false;
+
+        do printScore();
+        do showPreview();
 
         do Output.moveCursor(11, 47);
         do Output.printString("Next:");
-
-        do printScore();
-        do showNextTetromino();
 
         return this;
     }
@@ -39,7 +40,7 @@ class TetrisGame {
 
         let waited = difficulty;
 
-        while (true) {
+        while (~exit) {
             while (key = 0) {
                 let key = Keyboard.keyPressed();
                 do Sys.wait(100);
@@ -111,10 +112,12 @@ class TetrisGame {
             let type = 0;
         }
 
-        do tetromino.reset(type, 3, 20);
-        do tetromino.show();
-
-        do showNextTetromino();
+        if (tetromino.reset(type, 3, 20)) {
+            do tetromino.show();
+            do showPreview();
+        } else {
+            do gameOver();
+        }
 
         return;
     }
@@ -131,7 +134,7 @@ class TetrisGame {
         return;
     }
 
-    method void showNextTetromino() {
+    method void showPreview() {
         var int next, size;
         var Array tiles;
 
@@ -145,6 +148,21 @@ class TetrisGame {
 
         do Grid.drawPreview(tiles, size);
 
+        return;
+    }
+
+    method void gameOver() {
+        do board.clearLine(9);
+        do board.clearLine(10);
+        do board.clearLine(11);
+        do board.clearLine(12);
+
+        do Output.moveCursor(10, 30);
+        do Output.printString("Game");
+        do Output.moveCursor(11, 30);
+        do Output.printString("Over");
+
+        let exit = true;
         return;
     }
 }

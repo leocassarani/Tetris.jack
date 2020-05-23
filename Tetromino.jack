@@ -27,12 +27,36 @@ class Tetromino {
         return;
     }
 
-    method void reset(int typeArg, int colArg, int rowArg) {
+    method boolean reset(int typeArg, int colArg, int rowArg) {
+        var int x, y, i, size;
+        var Array tiles;
+
         let type = typeArg;
         let col = colArg;
         let row = rowArg;
         let rotation = 0;
-        return;
+
+        let tiles = Tetromino.tiles(type, rotation);
+        let size = Tetromino.size(type);
+
+        while (y < size) {
+            let x = 0;
+
+            while (x < size) {
+                if (tiles[i]) {
+                    if (board.isFull(col + x, row - y)) {
+                        return false;
+                    }
+                }
+
+                let x = x + 1;
+                let i = i + 1;
+            }
+
+            let y = y + 1;
+        }
+
+        return true;
     }
 
     method void show(boolean fill) {
@@ -68,7 +92,6 @@ class Tetromino {
 
         let tiles = Tetromino.tiles(type, rotation);
         let size = Tetromino.size(type);
-
         let max = size - 1;
 
         while (y < size) {
@@ -148,7 +171,6 @@ class Tetromino {
 
         let tiles = Tetromino.tiles(type, rotation);
         let size = Tetromino.size(type);
-
         let max = size - 1;
 
         while (y < size) {
@@ -198,7 +220,7 @@ class Tetromino {
 
             while (x < size) {
                 if (next[i]) {
-                    if (~(cur[i])) {
+                    if (~cur[i]) {
                         if (board.isFull(col + x, row - y)) {
                             return;
                         }
