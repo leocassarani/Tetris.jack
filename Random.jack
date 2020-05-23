@@ -1,0 +1,23 @@
+class Random {
+    static int seed;
+
+    function void seed(int value) {
+        let seed = seed + value;
+    }
+
+    function int next(int last) {
+        var int next;
+
+        let next = seed & 7;
+
+        if (next > 6) {
+            let next = last + 1;
+
+            if (next > 6) {
+                let next = 0;
+            }
+        }
+
+        return next;
+    }
+}

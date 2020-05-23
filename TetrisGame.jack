@@ -1,7 +1,7 @@
 class TetrisGame {
     field Board board;
     field Tetromino tetromino;
-    field int type, cleared, level, difficulty;
+    field int type, next, cleared, level, difficulty;
     field boolean exit;
 
     constructor TetrisGame new() {
@@ -13,6 +13,7 @@ class TetrisGame {
         do tetromino.show();
 
         let type = 0;
+        let next = 1;
         let cleared = 0;
         let level = 0;
         let difficulty = 12;
@@ -55,15 +56,19 @@ class TetrisGame {
             while (~(key = 0)) {
                 if (key = 130) { // left
                     do tetromino.moveLeft();
+                    do Random.seed(waited);
                 } else {
                     if (key = 132) { // right
                         do tetromino.moveRight();
+                        do Random.seed(waited + waited);
                     } else {
                         if (key = 131) { // up
                             do tetromino.rotate();
+                            do Random.seed(waited + waited + waited);
                         } else {
                             if (key = 133) { // down
                                 do step();
+                                do Random.seed(waited + waited + waited + waited);
                             }
                         }
                     }
@@ -79,6 +84,8 @@ class TetrisGame {
 
                 let key = Keyboard.keyPressed();
             }
+
+            do Random.seed(waited);
         }
 
         return;
@@ -107,10 +114,8 @@ class TetrisGame {
             do printScore();
         }
 
-        let type = type + 1;
-        if (type > 6) {
-            let type = 0;
-        }
+        let type = next;
+        let next = Random.next(next);
 
         if (tetromino.reset(type, 3, 20)) {
             do tetromino.show();
@@ -135,13 +140,8 @@ class TetrisGame {
     }
 
     method void showPreview() {
-        var int next, size;
+        var int size;
         var Array tiles;
-
-        let next = type + 1;
-        if (next > 6) {
-            let next = 0;
-        }
 
         let tiles = Tetromino.tiles(next, 0);
         let size = Tetromino.size(next);
@@ -152,6 +152,8 @@ class TetrisGame {
     }
 
     method void gameOver() {
+        let exit = true;
+
         do board.clearLine(9);
         do board.clearLine(10);
         do board.clearLine(11);
@@ -162,7 +164,6 @@ class TetrisGame {
         do Output.moveCursor(11, 30);
         do Output.printString("Over");
 
-        let exit = true;
         return;
     }
 }
