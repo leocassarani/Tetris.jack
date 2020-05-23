@@ -6,14 +6,7 @@ class TetrisGame {
     constructor TetrisGame new() {
         do Screen.clearScreen();
 
-        // (196, 1)         (316, 1)
-        // +-----------------------+
-        // |                       |
-        // |                       |
-        // +-----------------------+
-        // (196, 254)     (316, 254)
-
-        let board = Board.new(196, 2, 21, 12);
+        let board = Board.new(196, 2, 21);
         do board.drawOutline();
 
         let tetromino = Tetromino.new(0, 3, 19, board);

@@ -1,16 +1,15 @@
 class Board {
-    field int minX, minY, rows, tile;
+    field int minX, minY, rows;
     field boolean fill;
     field Array tiles;
 
-    constructor Board new(int x, int y, int rowsArg, int tileArg) {
+    constructor Board new(int x, int y, int rowsArg) {
         var int i, j;
         var Array row;
 
         let minX = x;
         let minY = y;
         let rows = rowsArg;
-        let tile = tileArg;
         let fill = false;
         let tiles = Array.new(rows);
 
@@ -80,8 +79,8 @@ class Board {
     method void drawTile(int col, int row, boolean fill) {
         var int x, y;
 
-        let x = minX + (tile * col);
-        let y = minY + (tile * (rows - (row + 1)));
+        let x = minX + (12 * col);
+        let y = minY + (12 * (rows - (row + 1)));
 
         do Grid.drawTile(x, y, col & 3, fill);
         return;
