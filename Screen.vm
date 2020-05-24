@@ -74,8 +74,3 @@ goto WHILE_EXP0
 label WHILE_END0
 push constant 0
 return
-function Screen.setColor 0
-push argument 0
-pop static 2
-push constant 0
-return
