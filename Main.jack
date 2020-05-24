@@ -1,14 +1,23 @@
 class Main {
     function void main() {
         var TetrisGame game;
+        var char key;
 
         do Tetromino.init();
         do Grid.init();
         do Random.init();
 
-        let game = TetrisGame.new();
-        do game.run();
-        do game.dispose();
+        while (true) {
+            let key = 0;
+
+            let game = TetrisGame.new();
+            do game.run();
+            do game.dispose();
+
+            while (~(key = 128)) {
+                let key = Keyboard.keyPressed();
+            }
+        }
 
         return;
     }

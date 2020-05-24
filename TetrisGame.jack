@@ -7,16 +7,22 @@ class TetrisGame {
     constructor TetrisGame new() {
         do Screen.clearScreen();
 
-        let board = Board.new(196, 2, 21);
-        let tetromino = Tetromino.new(0, 3, 19, board);
-        do tetromino.show();
-
-        let type = 0;
-        let next = 1;
         let cleared = 0;
         let level = 0;
         let difficulty = 12;
         let exit = false;
+
+        if (Random.isReady()) {
+            let type = Random.next(7);
+            let next = Random.next(7);
+        } else {
+            let type = 0;
+            let next = 1;
+        }
+
+        let board = Board.new(196, 2, 21);
+        let tetromino = Tetromino.new(type, 3, 19, board);
+        do tetromino.show();
 
         do printScore();
         do showPreview();

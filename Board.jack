@@ -15,6 +15,7 @@ class Board {
 
         while (i < rows) {
             let row = Array.new(10);
+            let j = 0;
 
             while (j < 10) {
                 let row[j] = false;
@@ -37,10 +38,12 @@ class Board {
         while (i < rows) {
             let row = tiles[i];
             do row.dispose();
+            let i = i + 1;
         }
-        do tiles.dispose();
 
+        do tiles.dispose();
         do Memory.deAlloc(this);
+
         return;
     }
 
