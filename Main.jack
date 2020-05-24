@@ -4,6 +4,7 @@ class Main {
 
         do Tetromino.init();
         do Grid.init();
+        do Random.init();
 
         let game = TetrisGame.new();
         do game.run();

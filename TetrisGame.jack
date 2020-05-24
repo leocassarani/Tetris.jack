@@ -8,7 +8,6 @@ class TetrisGame {
         do Screen.clearScreen();
 
         let board = Board.new(196, 2, 21);
-
         let tetromino = Tetromino.new(0, 3, 19, board);
         do tetromino.show();
 
@@ -37,12 +36,12 @@ class TetrisGame {
 
     method void run() {
         var char key;
-        var int waited;
+        var int waited, held, prevKey, prevWaited;
 
         let waited = difficulty;
 
         while (~exit) {
-            while (key = 0) {
+            while ((~exit) & (key = 0)) {
                 let key = Keyboard.keyPressed();
                 do Sys.wait(100);
 
@@ -53,22 +52,28 @@ class TetrisGame {
                 }
             }
 
-            while (~(key = 0)) {
+            let held = 0;
+            let prevKey = key;
+            let prevWaited = waited;
+
+            while ((~exit) & ~(key = 0)) {
+                if (~(key = prevKey)) {
+                    do Random.keyPress(prevKey, prevWaited, held);
+                    let held = 0;
+                    let prevKey = key;
+                }
+
                 if (key = 130) { // left
                     do tetromino.moveLeft();
-                    do Random.seed(waited);
                 } else {
                     if (key = 132) { // right
                         do tetromino.moveRight();
-                        do Random.seed(waited + waited);
                     } else {
                         if (key = 131) { // up
                             do tetromino.rotate();
-                            do Random.seed(waited + waited + waited);
                         } else {
                             if (key = 133) { // down
                                 do step();
-                                do Random.seed(waited + waited + waited + waited);
                             }
                         }
                     }
@@ -83,9 +88,10 @@ class TetrisGame {
                 }
 
                 let key = Keyboard.keyPressed();
+                let held = held + 1;
             }
 
-            do Random.seed(waited);
+            do Random.keyPress(prevKey, prevWaited, held);
         }
 
         return;
@@ -100,7 +106,7 @@ class TetrisGame {
 
         let lines = board.clearFullLines();
 
-        if (~(lines = 0)) {
+        if (lines > 0) {
             let cleared = cleared + lines;
 
             if (cleared < 100) {
@@ -110,12 +116,20 @@ class TetrisGame {
             }
 
             let difficulty = 12 - level;
-
             do printScore();
         }
 
         let type = next;
-        let next = Random.next(next);
+
+        if (Random.isReady()) {
+            let next = Random.next(7);
+        } else {
+            // Fallback for we don't yet have enough entropy yet.
+            let next = type + 1;
+            if (next > 6) {
+                let next = 0;
+            }
+        }
 
         if (tetromino.reset(type, 3, 20)) {
             do tetromino.show();

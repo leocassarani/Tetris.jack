@@ -1,23 +1,104 @@
 class Random {
-    static int seed;
+    static Array consts, entropy;
+    static int next, const, seeded, generated;
+    static boolean ready;
 
-    function void seed(int value) {
-        let seed = seed + value;
+    // The following algorithm is adapted from https://codebase64.org/doku.php?id=base:small_fast_8-bit_prng
+    function void init() {
+        // These 16 constants have the unique property of generating all
+        // possible 8-bit values when XOR'd with the left-shifted input.
+        let consts = Array.new(16);
+        let consts[0] = 29;
+        let consts[1] = 43;
+        let consts[2] = 45;
+        let consts[3] = 77;
+        let consts[4] = 95;
+        let consts[5] = 99;
+        let consts[6] = 101;
+        let consts[7] = 105;
+        let consts[8] = 113;
+        let consts[9] = 135;
+        let consts[10] = 141;
+        let consts[11] = 169;
+        let consts[12] = 195;
+        let consts[13] = 207;
+        let consts[14] = 231;
+        let consts[15] = 245;
+
+        let entropy = Array.new(3);
+        let seeded = 0;
+        let generated = 0;
+        let ready = false;
+
+        return;
     }
 
-    function int next(int last) {
-        var int next;
+    function boolean isReady() {
+        return ready;
+    }
 
-        let next = seed & 7;
+    function void keyPress(int key, int waited, int held) {
+        let entropy[0] = entropy[1];
+        let entropy[1] = entropy[2];
+        let entropy[2] = Random.xor(Random.xor(key, waited), held) & 15; // (key ^ waited ^ held) & 0x000F
 
-        if (next > 6) {
-            let next = last + 1;
-
-            if (next > 6) {
-                let next = 0;
+        if (~ready) {
+            let seeded = seeded + 1;
+            if (seeded = 3) {
+                do Random.reseed();
+                let ready = true;
             }
         }
 
-        return next;
+        return;
+    }
+
+    function int next(int max) {
+        var boolean xor;
+
+        if (~ready) {
+            return 0;
+        }
+
+        // Our PRNG will repeat after generating 256 values, so let's dip into
+        // the entropy array and start from a new seed to avoid the game
+        // looping through the same sequence of pieces.
+        if (generated = 256) {
+            do Random.reseed();
+            let generated = 0;
+        }
+
+        let generated = generated + 1;
+        let next = next * 2; // next << 1
+
+        if (next = 0) {
+            let xor = true;
+        } else {
+            let xor = ~((next & 256) = 0);
+            let next = next & 255;
+            let xor = xor & ~(next = 0);
+        }
+
+        if (xor) {
+            let next = Random.xor(next, const);
+        }
+
+        return Random.modulo(next, max);
+    }
+
+    function void reseed() {
+        let next = (16 * entropy[0]) + entropy[1]; // entropy[0] << 4 | entropy[1]
+        let const = consts[Random.xor(Random.xor(entropy[0], entropy[1]), entropy[2])];
+        return;
+    }
+
+    function int xor(int a, int b) {
+        return (a | b) & ~(a & b);
+    }
+
+    function int modulo(int x, int max) {
+        var int quotient;
+        let quotient = x / max;
+        return x - (quotient * max);
     }
 }
