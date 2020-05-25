@@ -7,7 +7,7 @@ class S {
 
         //  ■■
         // ■■
-        let tmp = Array.new(9);
+        let tmp = Init.newArray(9);
         let tmp[4] = true;
         let tmp[5] = true;
         let tmp[6] = true;
@@ -17,7 +17,7 @@ class S {
         // ■
         // ■■
         //  ■
-        let tmp = Array.new(9);
+        let tmp = Init.newArray(9);
         let tmp[0] = true;
         let tmp[3] = true;
         let tmp[4] = true;

@@ -6,7 +6,7 @@ class I {
         let tiles = Array.new(2);
 
         // ■■■■
-        let tmp = Array.new(16);
+        let tmp = Init.newArray(16);
         let tmp[4] = true;
         let tmp[5] = true;
         let tmp[6] = true;
@@ -17,7 +17,7 @@ class I {
         // ■
         // ■
         // ■
-        let tmp = Array.new(16);
+        let tmp = Init.newArray(16);
         let tmp[1] = true;
         let tmp[5] = true;
         let tmp[9] = true;

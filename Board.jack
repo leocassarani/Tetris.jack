@@ -5,7 +5,6 @@ class Board {
 
     constructor Board new(int x, int y, int rowsArg) {
         var int i, j;
-        var Array row;
 
         let minX = x;
         let minY = y;
@@ -14,15 +13,7 @@ class Board {
         let tiles = Array.new(rows);
 
         while (i < rows) {
-            let row = Array.new(10);
-            let j = 0;
-
-            while (j < 10) {
-                let row[j] = false;
-                let j = j + 1;
-            }
-
-            let tiles[i] = row;
+            let tiles[i] = Init.newArray(10);
             let i = i + 1;
         }
 

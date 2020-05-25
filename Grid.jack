@@ -4,7 +4,7 @@ class Grid {
     function void init() {
         let screen = 16384;
 
-        let draw = Array.new(8);
+        let draw = Init.newArray(8);
         let draw[0] = -16;   // 0xFFF0
         let draw[2] = 4095;  // 0x0FFF
         let draw[4] = -4096; // 0xF000

@@ -7,7 +7,7 @@ class Z {
 
         // ■■
         //  ■■
-        let tmp = Array.new(9);
+        let tmp = Init.newArray(9);
         let tmp[3] = true;
         let tmp[4] = true;
         let tmp[7] = true;
@@ -17,7 +17,7 @@ class Z {
         //  ■
         // ■■
         // ■
-        let tmp = Array.new(9);
+        let tmp = Init.newArray(9);
         let tmp[2] = true;
         let tmp[4] = true;
         let tmp[5] = true;

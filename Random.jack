@@ -26,6 +26,7 @@ class Random {
         let consts[15] = 245;
 
         let entropy = Array.new(3);
+
         let seeded = 0;
         let generated = 0;
         let ready = false;

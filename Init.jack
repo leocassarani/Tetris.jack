@@ -1,0 +1,15 @@
+class Init {
+    function Array newArray(int size) {
+        var int i;
+        var Array array;
+
+        let array = Array.new(size);
+
+        while (i < size) {
+            let array[i] = false;
+            let i = i + 1;
+        }
+
+        return array;
+    }
+}
