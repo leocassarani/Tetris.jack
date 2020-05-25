@@ -148,11 +148,11 @@ class TetrisGame {
     }
 
     method void printScore() {
-        do Output.moveCursor(7, 8);
+        do Output.moveCursor(8, 8);
         do Output.printString("Level: ");
         do Output.printInt(level);
 
-        do Output.moveCursor(15, 8);
+        do Output.moveCursor(14, 8);
         do Output.printString("Lines: ");
         do Output.printInt(cleared);
 
