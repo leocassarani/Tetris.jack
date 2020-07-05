@@ -1,16 +1,12 @@
-HACK_JS := $(HOME)/code/computationclub/hack-js/bin/run
 JACK_FILES := $(wildcard *.jack)
-
-Tetris.hack: $(JACK_FILES)
-	jackc --hack .
+OS_DIR := ./OS
 
 Tetris.bin: $(JACK_FILES)
-	jackc --bin .
+	jackc --bin -o $@ $(JACK_FILES) $(OS_DIR)
 
-run: Tetris.hack
-	$(HACK_JS) Tetris.hack
+Tetris.hack: $(JACK_FILES)
+	jackc --hack -o $@ $(JACK_FILES) $(OS_DIR)
 
-prog: Tetris.bin
-	iceprog -o 1024k Tetris.bin
-
-.PHONY: run prog
+.PHONY: clean
+clean:
+	rm -f Tetris.hack Tetris.bin
