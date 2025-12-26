@@ -244,56 +244,44 @@ class Tetromino {
     function Array tiles(int type, int rotation) {
         if (type = 0) {
             return I.tiles(rotation);
-        } else {
-            if (type = 1) {
-                return J.tiles(rotation);
-            } else {
-                if (type = 2) {
-                    return L.tiles(rotation);
-                } else {
-                    if (type = 3) {
-                        return O.tiles(rotation);
-                    } else {
-                        if (type = 4) {
-                            return S.tiles(rotation);
-                        } else {
-                            if (type = 5) {
-                                return T.tiles(rotation);
-                            } else { // type = 6
-                                return Z.tiles(rotation);
-                            }
-                        }
-                    }
-                }
-            }
         }
+        if (type = 1) {
+            return J.tiles(rotation);
+        }
+        if (type = 2) {
+            return L.tiles(rotation);
+        }
+        if (type = 3) {
+            return O.tiles(rotation);
+        }
+        if (type = 4) {
+            return S.tiles(rotation);
+        }
+        if (type = 5) {
+            return T.tiles(rotation);
+        }
+        return Z.tiles(rotation); // type = 6
     }
 
     function int size(int type) {
         if (type = 0) {
             return I.size();
-        } else {
-            if (type = 1) {
-                return J.size();
-            } else {
-                if (type = 2) {
-                    return L.size();
-                } else {
-                    if (type = 3) {
-                        return O.size();
-                    } else {
-                        if (type = 4) {
-                            return S.size();
-                        } else {
-                            if (type = 5) {
-                                return T.size();
-                            } else { // type = 6
-                                return Z.size();
-                            }
-                        }
-                    }
-                }
-            }
         }
+        if (type = 1) {
+            return J.size();
+        }
+        if (type = 2) {
+            return L.size();
+        }
+        if (type = 3) {
+            return O.size();
+        }
+        if (type = 4) {
+            return S.size();
+        }
+        if (type = 5) {
+            return T.size();
+        }
+        return Z.size(); // type = 6
     }
 }
