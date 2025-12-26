@@ -169,14 +169,15 @@ class Tetromino {
         return;
     }
 
-    method void rotate() {
+    // direction should be +1 for clockwise rotation, -1 for counter-clockwise.
+    method void rotate(int direction) {
         var int x, y, i, size, nextRotation;
         var Array cur, next;
 
         let cur = Tetromino.tiles(type, rotation);
         let size = Tetromino.size(type);
 
-        let nextRotation = (rotation + 1) & 3; // (rotation + 1) mod 4
+        let nextRotation = (rotation + direction) & 3; // (rotation + direction) mod 4
         let next = tiles(nextRotation);
 
         while (y < size) {

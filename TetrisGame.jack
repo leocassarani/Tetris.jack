@@ -75,11 +75,15 @@ class TetrisGame {
                     if (key = 132) { // right
                         do tetromino.move(1);
                     } else {
-                        if (key = 131) { // up
-                            do tetromino.rotate();
+                        if ((key = 131) | (key = 65)) { // up or A
+                            do tetromino.rotate(1);
                         } else {
-                            if (key = 133) { // down
-                                do step();
+                            if (key = 66) { // B
+                              do tetromino.rotate(-1);
+                            } else {
+                              if (key = 133) { // down
+                                  do step();
+                              }
                             }
                         }
                     }
