@@ -126,46 +126,8 @@ class Tetromino {
         return true;
     }
 
-    method void moveLeft() {
-        var int x, y, i, size, tile;
-        var Array tiles;
-
-        let tiles = Tetromino.tiles(type, rotation);
-        let size = Tetromino.size(type);
-
-        while (y < size) {
-            let x = 0;
-
-            while (x < size) {
-                let tile = tiles[i];
-
-                if (x > 0) {
-                    if (tile & tiles[i - 1]) {
-                        let tile = false;
-                    }
-                }
-
-                if (tile) {
-                    if (board.isFull((col + x) - 1, row - y)) {
-                        return;
-                    }
-                }
-
-                let x = x + 1;
-                let i = i + 1;
-            }
-
-            let y = y + 1;
-        }
-
-        do show(false);
-        let col = col - 1;
-        do show(true);
-
-        return;
-    }
-
-    method void moveRight() {
+    // offset should be -1 for moving left, +1 for moving right.
+    method void move(int offset) {
         var int x, y, i, size, max, tile;
         var Array tiles;
 
@@ -179,14 +141,16 @@ class Tetromino {
             while (x < size) {
                 let tile = tiles[i];
 
-                if (x < max) {
-                    if (tile & tiles[i + 1]) {
+                // Here we make the simplifying assumption that offset will
+                // only ever be -1 or +1.
+                if (((offset < 0) & (x > 0)) | ((offset > 0) & (x < max))) {
+                    if (tile & tiles[i + offset]) {
                         let tile = false;
                     }
                 }
 
                 if (tile) {
-                    if (board.isFull((col + x) + 1, row - y)) {
+                    if (board.isFull((col + x) + offset, row - y)) {
                         return;
                     }
                 }
@@ -199,7 +163,7 @@ class Tetromino {
         }
 
         do show(false);
-        let col = col + 1;
+        let col = col + offset;
         do show(true);
 
         return;
